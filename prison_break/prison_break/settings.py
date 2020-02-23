@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 #updated to check commit works--HJ
+#updated again -HJ
 
 import os
 
