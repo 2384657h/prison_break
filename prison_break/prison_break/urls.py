@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin #Test 2
 from django.urls import path #Test
+from prison_break_app import views
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('prisonbreak/', include('prison_break_app.urls')),
+    path('', views.index, name='index'),
 ]
