@@ -1,8 +1,17 @@
-{% extends 'base.html'}
+{% extends 'prison_break_app/base.html '%}
 {% load static %}
 {% block title_block %}
 Home
 {% endblock %}
+
 {% block body_block %}
+<link rel="stylesheet"  href="{% static "css/indexcss.css" %}" type="text/css"></link>
 <h1 class="h1home">Welcome to Prison Break</h1>
+<p class="text-center" id="intro">Prison break is an adventure game where the player must escape the prison as a certain chosen character. 
+    Click the play button below to start a game.
+</p>
 {% endblock %}
+
+
+
+
