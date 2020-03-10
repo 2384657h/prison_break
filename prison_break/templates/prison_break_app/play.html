@@ -1,6 +1,10 @@
-<html>
-    <head>
-        <title>Test Game</title>
+{% extends 'prison_break_app/base.html '%}
+{% load static %}
+{% block title_block %}
+Game Screen
+{% endblock %}
+
+{% block body_block %}
         <style>
             #gameScreen{
 				border : 1px solid black;
@@ -8,7 +12,6 @@
                 margin: 0 auto;
             }
         </style>
-    </head>
     <canvas id="gameScreen" width="608" height="608"></canvas>
-    <script src="src/index.js "></script>
-</html>
+    <script src="{% static "js/play.js" %}"></script>
+{% endblock %}
