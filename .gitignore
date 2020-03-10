@@ -1,4 +1,5 @@
 prison_break/db.sqlite3
+<<<<<<< HEAD
 prison_break/prison_break/__pycache__/__init__.cpython-37.pyc
 prison_break/prison_break/__pycache__/settings.cpython-37.pyc
 prison_break/prison_break/__pycache__/urls.cpython-37.pyc
@@ -8,3 +9,7 @@ prison_break/prison_break_app/__pycache__/urls.cpython-37.pyc
 prison_break/prison_break_app/__pycache__/views.cpython-37.pyc
 
 
+=======
+prison_break/prison_break/__pycache__
+*.pyc
+>>>>>>> b66ec8b5bf9d414cf6c5855e2b2f5980e34841d9
