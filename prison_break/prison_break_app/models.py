@@ -1,15 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
-	#each score on leaderboard shows name and score
-	user_name = models.CharField(max_length=30,unique=False)
+class UserProfile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	score = models.IntegerField(default=0)
-	email = models.CharField(max_length=30,unique=True)
-	character = models.CharField(max_length=30)
-
+	picture = models.ImageField(upload_to='profile_image', blank=True)
 
 	def __str__(self):
-		return self.name
+		return self.user.user_name
 
 class Character(models.Model):
 	char_ID = models.CharField(max_length=30,unique=True)
