@@ -17,27 +17,27 @@ Sign up
           </div>
           <div class="card-body">
             <h5 class="card-title text-center">Register</h5>
-            <form class="form-signin" method="POST">
+            <form class="form-signin" method="POST" action="{% url 'prison_break_app:register' %}">
                 {% csrf_token %}
               <div class="form-label-group">
-                <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
+                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username" style="text-transform:lowercase" required autofocus>
                 <label for="inputUserame">Username</label>
               </div>
 
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+                <input type="email" id="inputEmail" name="Email" class="form-control" placeholder="Email address" required>
                 <label for="inputEmail">Email address</label>
               </div>
               
               <hr>
 
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="inputPassword" name="Password" class="form-control" placeholder="Password" required>
                 <label for="inputPassword">Password</label>
               </div>
               
               <div class="form-label-group">
-                <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="inputConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Password" required>
                 <label for="inputConfirmPassword">Confirm password</label>
               </div>
 

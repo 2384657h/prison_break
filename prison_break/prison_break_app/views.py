@@ -21,11 +21,12 @@ def register(request):
     registered = False
 
     if request.method == "POST":
-        Username = request.POST.get('inputUserame')
-        email = request.POST.get('inputEmail')
-        Password = request.POST.get('inputPassword')
-        user =  User.objects.create_user(username= Username, password = Password, email= email)
+        data = request.POST.copy()
+        user = User.objects.create_user(username=request.POST.get('Username'), password =request.POST.get('Password'), email=request.POST.get('Email'))
         user.save()
+        registered = True
+    else:
+        print("Error not a post request")
 
 
 
