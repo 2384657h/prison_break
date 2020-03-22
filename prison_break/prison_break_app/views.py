@@ -6,3 +6,6 @@ def index(request):
 
 def about(request):
     return render(request, 'prison_break_app/about.html')
+
+def play(request):
+    return render(request, 'prison_break_app/play.html')

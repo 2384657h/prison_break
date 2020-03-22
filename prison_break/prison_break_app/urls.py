@@ -6,4 +6,5 @@ app_name = 'prison_break_app'
 urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
+    path('play/', views.play, name='play'),
 ]

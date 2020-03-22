@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'prison_break_app/base.html' %}
 {% load static %}
 {% block title_block %}
@@ -18,3 +19,22 @@ Home
 
 
 
+=======
+{% extends 'prison_break_app/base.html'%}
+{% load static %}
+{% block title_block %}
+Game Screen
+{% endblock %}
+
+{% block body_block %}
+        <style>
+            #gameScreen{
+				border : 1px solid black;
+                display: block;
+                margin: 0 auto;
+            }
+        </style>
+    <canvas id="gameScreen" width="600" height="600"></canvas>
+    <script src="{% static "js/play.js" %}"></script>
+{% endblock %}
+>>>>>>> c36d7c066106edd53d859ed85829db98e4ae1cb2
