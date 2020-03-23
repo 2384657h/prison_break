@@ -9,4 +9,6 @@ urlpatterns = [
     path('play/', views.play, name='play'),
     path('signup/', views.signup, name='signup'),
     path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
+    path('signin/', views.signin, name='signin'),
 ]
