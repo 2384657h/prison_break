@@ -17,6 +17,10 @@ def about(request):
     return render(request, 'prison_break_app/about.html')
 
 @login_required
+def profile(request):
+    return render(request, 'prison_break_app/profile.html')
+
+@login_required
 def play(request):
     return render(request, 'prison_break_app/play.html')
 
@@ -33,6 +37,14 @@ def register(request):
     if request.method == "POST":
         user = User.objects.create_user(username=request.POST.get('Username'), password =request.POST.get('Password'), email=request.POST.get('Email'))
         user.save()
+        profile = UserProfile()
+        profile.user = user
+        
+        if 'profilepic' in request.FILES:
+            profile.picture = request.FILES['profilepic']
+
+        profile.save()
+
         registered = True
     else:
         print("Error not a post request")

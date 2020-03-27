@@ -1,0 +1,11 @@
+{% extends 'prison_break_app/base.html'%}
+{% load static %}
+
+{% block title_block %}
+{{ user }}
+
+{% endblock %}
+
+{% block body_block %}
+<p> {{ user.username }} </p>
+{% endblock %}

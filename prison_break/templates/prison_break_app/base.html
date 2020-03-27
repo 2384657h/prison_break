@@ -46,6 +46,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Leaderboards</a>
               </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                {% if user.userprofile.picture == None %}
+                <a class="nav-link" href="#">{{ user }}</a>
+                {% else %}
+                <a class="nav-link" href="{% url 'prison_break_app:profile' %}"><img src="{{ user.userprofile.picture.url }}" width="35" height="35"></a>
+                {% endif %}
+              </li>
+            {% endif %}
+              
               </ul>
             </div>
           </nav>
