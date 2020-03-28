@@ -1,0 +1,17 @@
+{% extends 'prison_break_app/base.html'%}
+{% load static %}
+
+{% block title_block %}
+{{ user }}
+
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+<h1>User Profile: {{ user }}</h1>
+<p>Username: {{ user.username }}</p>
+<p> Email Address: {{ user.email }} </p>
+<p>Profile picture: <img src="{{ user.userprofile.picture.url }}" width="400" height="400"></p>
+
+</div>
+{% endblock %}
