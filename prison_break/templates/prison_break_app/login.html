@@ -19,7 +19,7 @@ Login
             <form class="form-signin" method="POST" action="{% url 'prison_break_app:signin' %}">
                 {% csrf_token %}
               <div class="form-label-group">
-                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username" style="text-transform:lowercase" required autofocus>
+                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username"  required autofocus>
                 <label for="inputUserame">Username</label>
               </div>
               
