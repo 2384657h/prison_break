@@ -25,7 +25,6 @@ def play(request):
     return render(request, 'prison_break_app/play.html')
 
 def signup(request):
-    logout(request)
     return render(request, 'prison_break_app/Signup.html')
 
 def login(request):
@@ -71,3 +70,8 @@ def signin(request):
 
     else:
         return render(request, 'prison_break_app/login.html')
+
+@login_required
+def userlogout(request):
+    logout(request)
+    return redirect(reverse('prison_break_app:index'))
