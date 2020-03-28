@@ -1,5 +1,8 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
+{% block head_block %}
+<link rel="stylesheet"  href="{% static "css/signup.css" %}" type="text/css"></link>
+{% endblock %}
 
 {% block title_block %}
 Sign up
@@ -7,7 +10,8 @@ Sign up
 {% endblock %}
 
 {% block body_block %}
-<link rel="stylesheet"  href="{% static "css/signup.css" %}" type="text/css"></link>
+
+
   <div class="container">
     <div class="row">
       <div class="col-lg-10 col-xl-9 mx-auto">
@@ -17,12 +21,13 @@ Sign up
           </div>
           <div class="card-body">
             <h5 class="card-title text-center">Register</h5>
-            <form class="form-signin" method="POST" action="{% url 'prison_break_app:register' %}">
+            <form class="form-signin" method="POST" enctype="multipart/form-data" action="{% url 'prison_break_app:register' %}">
                 {% csrf_token %}
               <div class="form-label-group">
-                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username" style="text-transform:lowercase" required autofocus>
+                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username"  required autofocus>
                 <label for="inputUserame">Username</label>
               </div>
+              
 
               <div class="form-label-group">
                 <input type="email" id="inputEmail" name="Email" class="form-control" placeholder="Email address" required>
@@ -40,16 +45,20 @@ Sign up
                 <input type="password" id="inputConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Password" required>
                 <label for="inputConfirmPassword">Confirm password</label>
               </div>
+              <script src="{% static "js/passwordvalidator.js" %}"></script>
+              <div class="form-label-group">
+                <input type="file" id=fileUpload name="profilepic" class="form-control" placeholder="Profile Picture" accept="image/*">
+                <label for="fileUpload">Profile Picture</label>
+              </div>
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
               <hr class="my-4">
               <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit" value="POST"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
-
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-</body>
+
 {% endblock %}
