@@ -31,3 +31,9 @@ prison_break/db.sqlite3
 prison_break/db.sqlite3
 prison_break/media
 prison_break/db.sqlite3
+prison_break/prison_break_app/migrations/0002_leaderboard_user.py
+prison_break/prison_break_app/migrations/0001_initial.py
+prison_break/prison_break_app/migrations/__init__.py
+prison_break/prison_break_app/migrations/__pycache__/__init__.cpython-37.pyc
+prison_break/db.sqlite3
+prison_break/prison_break_app/migrations/__pycache__/__init__.cpython-37.pyc

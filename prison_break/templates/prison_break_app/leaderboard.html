@@ -1,0 +1,17 @@
+{% extends 'prison_break_app/base.html'%}
+{% load static %}
+{% block title_block %}
+Leaderboard
+{% endblock %}
+
+{% block body_block %}
+{% if Leaderboard %}
+        <ul>
+            {% for score in Leaderboard %}
+            <li>{{ score.name }} {{ score.lscore }}></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong>Leaderboard scores unavaliable.</strong>
+{% endif %}
+{% endblock %}

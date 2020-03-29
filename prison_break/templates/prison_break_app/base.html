@@ -26,6 +26,8 @@
     </head>
 
     <body>
+      
+    
       <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <div>
           <nav class="navbar navbar-expand-lg navbar navbar-light">
@@ -57,14 +59,16 @@
                 </li>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Leaderboards</a>
+                <a class="nav-link" href="{% url 'prison_break_app:leaderboard' %}">Leaderboards</a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
-                {% if user.userprofile.picture == None %}
-                <a class="nav-link" href="#">{{ user }}</a>
+                {% if user.userprofile.picture %}
+                <a class="nav-link" href="{% url 'prison_break_app:profile' %}">Profile: <img src="{{ user.userprofile.picture.url }}" width="35" height="35"></a>
+              
                 {% else %}
-                <a class="nav-link" href="{% url 'prison_break_app:profile' %}"><img src="{{ user.userprofile.picture.url }}" width="35" height="35"></a>
+                <a class="nav-link" href="{% url 'prison_break_app:profile' %}">Profile: {{ user }}</a>
+                
                 {% endif %}
               </li>
             {% endif %}
@@ -73,10 +77,27 @@
             </div>
           </nav>
           </div>
+          <div id="background">
+          <style>
+            #background{
+              background-image:url('{% static "images/background.jpg" %}');
+              min-height: 100vh;
+             
+              height: 100%;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+          </style>
+         
+          <div id="content">
+           
+          
         {% block body_block %}
         
         {% endblock %}
-        
+      </div>
+    </div>
 
         
     </body>
