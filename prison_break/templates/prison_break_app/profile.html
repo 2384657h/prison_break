@@ -11,6 +11,7 @@
 <h1>User Profile: {{ user }}</h1>
 <p>Username: {{ user.username }}</p>
 <p> Email Address: {{ user.email }} </p>
+<p> Score: {{ user.userprofile.score }} </p>
 <p>Profile picture: <img src="{{ user.userprofile.picture.url }}" width="400" height="400"></p>
 
 </div>
