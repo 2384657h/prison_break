@@ -1,5 +1,7 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
 {% block title_block %}
 Login
 {% endblock %}
@@ -32,8 +34,7 @@ Login
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
               <hr class="my-4">
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit" value="POST"><i class="fab fa-google mr-2"></i> Login with Google</button>
-
+              <a href="{% provider_login_url "google" %}" class="btn btn-primary">Go to Google</a>
             </form>
           </div>
         </div>

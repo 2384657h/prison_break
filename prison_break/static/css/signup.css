@@ -3,10 +3,7 @@
   --input-padding-y: .75rem;
 }
 
-body {
-  background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
-}
+
 
 .card-signin {
   border: 0;
@@ -16,7 +13,7 @@ body {
 }
 
 .card-signin .card-title {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-weight: 300;
   font-size: 1.5rem;
 }

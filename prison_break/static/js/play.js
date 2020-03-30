@@ -722,6 +722,26 @@ function characterSelectionLoop(timestamp){
 	}
 }
 
+//had to use django context in html file to get url
+//as ajax post request wasnt finding url from inside js file
+let urlC = document.getElementById("counterURL").value;
+
+$(document).ready(function(){
+	$('#save_btn').click(function(){
+		if (person.keyFound){
+			//alert("saved!");
+			//counter++;
+			$.ajax({
+				url: urlC,
+				data: {'counter': 1},
+				type: 'POST'
+			}).done(function(response){
+				console.log(response);
+			});
+		}
+	})
+})
+
 
 function gameLoop(timestamp){
 
