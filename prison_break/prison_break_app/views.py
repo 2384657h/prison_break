@@ -52,6 +52,27 @@ def register(request):
 
     return render(request, 'prison_break_app/signup.html' )
 
+
+def updatePhoto(request):
+    userProfile = UserProfile.objects.get(user = request.user.id)
+    userProfile.picture = request.FILES['profilepic']
+    userProfile.save()
+    return render(request, 'prison_break_app/profile.html')
+
+def updateUsername(request):
+    user = request.user
+    user.username=request.POST.get('username')
+    user.save()
+    return render(request, 'prison_break_app/profile.html')
+
+def updateEmail(request):
+    user = request.user
+    user.email=request.POST.get('email')
+    user.save()
+    return render(request, 'prison_break_app/profile.html')
+        
+
+
 def signin(request):
     if request.method == "POST":
         username = request.POST.get('Username')

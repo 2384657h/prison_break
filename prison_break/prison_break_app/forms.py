@@ -1,5 +1,6 @@
 from prison_break_app.models import User, UserProfile
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
