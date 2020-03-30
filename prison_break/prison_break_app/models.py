@@ -7,7 +7,7 @@ class UserProfile(models.Model):
 	picture = models.ImageField(upload_to='profile_image', blank=True)
 
 	def __str__(self):
-		return self.user.user_name
+		return self.user.username
 
 class Character(models.Model):
 	char_ID = models.CharField(max_length=30,unique=True)
