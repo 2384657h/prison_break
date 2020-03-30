@@ -8,6 +8,9 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import itertools
+from django.http import JsonResponse
+
+
 
 
 # Create your views here.
@@ -99,7 +102,7 @@ def leaderboard(request):
     for key, value in x:
         leaderboard = Leaderboard()
        
-        leaderboard.user = UserProfile.objects.get(user=User.objects.get(username=key))
+        leaderboard.userp = UserProfile.objects.get(user=User.objects.get(username=key))
         leaderboard.name = key
         leaderboard.lscore = value
         if Leaderboard.objects.filter(name=leaderboard.name).exists():
@@ -108,15 +111,20 @@ def leaderboard(request):
             leaderboard.save()
 
 
+
     
     leaderboards = Leaderboard.objects.all()
     context_dict = {}
 
     context_dict['Leaderboard'] = leaderboards
-    print(context_dict)
     
     
     return render(request, 'prison_break_app/leaderboard.html', context=context_dict)
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {'is_taken': User.objects.filter(username=username).exists()}
+    return JsonResponse(data)
 
     
 

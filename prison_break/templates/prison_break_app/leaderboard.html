@@ -1,17 +1,45 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
+{% block head_block %}
+<link rel="stylesheet"  href="{% static "css/leaderboard.css" %}" type="text/css"></link>
+{% endblock %}
 {% block title_block %}
 Leaderboard
 {% endblock %}
 
 {% block body_block %}
+<div id=ldiv>
+    <h1 id="lheader">High score Leaderboard</h1>
+</div>
 {% if Leaderboard %}
-        <ul>
+
+<div id="tablecont">
+
+<table class="content-table">
+    <thead>
+        <th>#</th>
+        <th>Username</th>
+        <th>Score</th>
+        <th>Profile picture</th>
+        
+    </thead>
+    <tbody>
             {% for score in Leaderboard %}
-            <li>{{ score.name }} {{ score.lscore }}></li>
+             <tr>
+            <td>{{ forloop.counter }}</td>  
+            <td>{{ score.name }}</td>
+            <td>{{ score.lscore }}</td>
+            {% if score.userp.picture %}
+            <td><img src="{{ score.userp.picture.url }}" width="50" height="50"></td>
+            {% endif %}
+        </tr> 
             {% endfor %}
-        </ul>
+        </tbody>
+        </table>
+    </div>
         {% else %}
+        <div id="Error">
         <strong>Leaderboard scores unavaliable.</strong>
+    </div>
 {% endif %}
 {% endblock %}

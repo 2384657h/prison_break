@@ -14,4 +14,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('logout/', views.userlogout, name='logout'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
+    path('ajax/validate_username/', views.validate_username, name='validate_username')
 ]
