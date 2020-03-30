@@ -6,6 +6,7 @@ class UserProfile(models.Model):
 	score = models.IntegerField(default=0)
 	picture = models.ImageField(upload_to='profile_image', blank=True)
 
+
 	def __str__(self):
 		return self.user.username
 
@@ -16,10 +17,6 @@ class Character(models.Model):
 	item_2 = models.CharField(max_length=128)
 
 class Leaderboard(models.Model):
-	user_score = models.ForeignKey(User, on_delete=models.CASCADE)
-
-	def __str__(self):
-		return self.title
-
-	class Meta:
-		ordering = ['user_score']
+	userp = models.OneToOneField(UserProfile, on_delete=models.CASCADE, default=None)
+	name = models.CharField(max_length=100)
+	lscore = models.IntegerField(default=0)

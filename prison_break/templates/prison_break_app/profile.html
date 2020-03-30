@@ -12,7 +12,11 @@
 <p>Username: {{ user.username }}</p>
 <p> Email Address: {{ user.email }} </p>
 <p> Score: {{ user.userprofile.score }} </p>
+{% if user.userprofile.picture %}
 <p>Profile picture: <img src="{{ user.userprofile.picture.url }}" width="400" height="400"></p>
+{% else %}
+<p> No profile picture </p>
+{% endif %}
 
 </div>
 {% endblock %}

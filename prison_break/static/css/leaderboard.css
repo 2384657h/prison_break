@@ -1,0 +1,38 @@
+#ldiv{
+    background-color: yellow;
+}
+
+#error{
+    text-align: center;
+    background-color: white;
+}
+#lheader{
+    text-align: center;
+    font-weight: bolder;
+}
+
+.content-table{
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#tablecont{
+    overflow: auto;
+    overflow-y: hidden;
+}
+.content-table thead th{
+    background-color: aquamarine;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+.content-table tbody td{
+    background-color: white;
+    text-align: center;
+    font-size: large;
+    
+}
