@@ -47,7 +47,7 @@ def update_counter(request):
 
     return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score))
 
-def register(request):
+def register(request, backend='django.contrib.auth.backends.ModelBackend'):
     registered = False
 
     if request.method == "POST":
