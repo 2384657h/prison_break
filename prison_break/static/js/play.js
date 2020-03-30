@@ -207,7 +207,7 @@ class Person {
 		personImg.src = this.characterSrc;
 		ctx.drawImage(personImg, this.position.x,this.position.y,this.width,this.height);
 	}
-	
+
 
 	update(deltaTime){
 		if(!deltaTime) return;
