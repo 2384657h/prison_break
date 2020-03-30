@@ -11,6 +11,35 @@ Sign up
 
 {% block body_block %}
 
+<script>
+  window.onload = function() {
+ // add your code change here
+    $("#inputUsername").change(function(){
+      var username = $(this).val();
+      
+
+      $.ajax({
+        url: '{% url "prison_break_app:validate_username" %}',
+        data: {
+          'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            $('#inputUsername')[0].setCustomValidity('Username already taken');
+            
+          }
+        }
+      });
+    });
+
+   
+}
+
+
+  </script>
+
+
 
   <div class="container">
     <div class="row">
@@ -24,7 +53,7 @@ Sign up
             <form class="form-signin" method="POST" enctype="multipart/form-data" action="{% url 'prison_break_app:register' %}">
                 {% csrf_token %}
               <div class="form-label-group">
-                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username"  required autofocus>
+                <input type="text" id="inputUsername" name="Username" class="form-control" placeholder="Username" maxlength="35" required autofocus>
                 <label for="inputUserame">Username</label>
               </div>
               
@@ -48,10 +77,10 @@ Sign up
               <script src="{% static "js/passwordvalidator.js" %}"></script>
               <div class="form-label-group">
                 <input type="file" id=fileUpload name="profilepic" class="form-control" placeholder="Profile Picture" accept="image/*">
-                <label for="fileUpload">Profile Picture</label>
+                <label for="fileUpload">Profile Picture (Square image reccomended)</label>
               </div>
 
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" id="thesubmit" type="submit">Register</button>
               <hr class="my-4">
               <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit" value="POST"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
             </form>

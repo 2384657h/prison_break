@@ -14,4 +14,5 @@ function validatePassword(){
   confirm_password.onkeyup = validatePassword;
 }
 
+
 validatePassword()

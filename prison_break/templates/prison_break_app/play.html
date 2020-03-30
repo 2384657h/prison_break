@@ -10,9 +10,12 @@ Game Screen
 				border : 1px solid black;
                 display: block;
                 margin: 0 auto;
+                background: white;
             }
         </style>
+	<button type="button" id="save_btn">Save Game?</button>
     <canvas id="gameScreen" width="600" height="600"></canvas>
+	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
     <script src="{% static "js/play.js" %}"></script>
 {% endblock %}
 
