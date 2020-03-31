@@ -532,6 +532,7 @@ let found_k3 = false;
 var buffer = 82;
 
 let isNewGame = document.getElementById("newgamecheck").value;
+let charcodeInput = document.getElementById("charCode").value;
 
 function modeSelectionLoop(timestamp){
 	ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
@@ -605,6 +606,12 @@ function modeSelectionLoop(timestamp){
 			}
 			else{
 				//not new game, straight into
+				player.characterCode = parseInt(charcodeInput);
+				//change speed of character if strongman
+				if (parseInt(charcodeInput ==3)){
+					player.maxSpeedx=3;
+					player.maxSpeedy=3;
+				}
 				player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
 				timestamp = 0;
 				lastTime = 0;
