@@ -1,29 +1,14 @@
-prison_break/db.sqlite3
-<<<<<<< HEAD
-prison_break/prison_break/__pycache__
 *.pyc
+__pycache__
+db.sqlite3
+prison_break/media
 
 
-
-=======
-<<<<<<< HEAD
-prison_break/prison_break/__pycache__
-*.pyc
-=======
-<<<<<<< HEAD
-prison_break/prison_break/__pycache__/__init__.cpython-37.pyc
-prison_break/prison_break/__pycache__/settings.cpython-37.pyc
-prison_break/prison_break/__pycache__/urls.cpython-37.pyc
-prison_break/prison_break/__pycache__/wsgi.cpython-37.pyc
-prison_break/prison_break_app/__pycache__/views.cpython-37.pyc
-prison_break/prison_break_app/__pycache__/urls.cpython-37.pyc
-prison_break/prison_break_app/__pycache__/views.cpython-37.pyc
 
 
 =======
 prison_break/prison_break/__pycache__
 *.pyc
->>>>>>> b66ec8b5bf9d414cf6c5855e2b2f5980e34841d9
 >>>>>>> 216fbca145c807589b42927a179e8f3689903cd0
 >>>>>>> 4b621f935424689568dcf233af580dd943f98cb4
 prison_break/db.sqlite3
@@ -38,4 +23,5 @@ prison_break/prison_break_app/migrations/__pycache__/__init__.cpython-37.pyc
 prison_break/db.sqlite3
 prison_break/prison_break_app/migrations/__pycache__/__init__.cpython-37.pyc
 prison_break/prison_break_app/migrations/0003_auto_20200330_1412.py
+>>>>>>> calumM
 prison_break/prison_break_app/migrations/__pycache__/__init__.cpython-37.pyc

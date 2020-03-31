@@ -7,6 +7,7 @@ from django.contrib.auth import login as auth_login
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 import itertools
 from django.http import JsonResponse
 
@@ -34,7 +35,19 @@ def signup(request):
 def login(request):
     return render(request, 'prison_break_app/login.html')
 
-def register(request):
+@csrf_exempt
+def update_counter(request):
+    if request.method == 'POST':
+        score_count = request.POST['counter']
+        this_user = request.user
+        this_user.userprofile.score = this_user.userprofile.score + int(score_count)
+        this_user.save()
+        this_user.userprofile.save()
+        message = 'update successful'
+
+    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score))
+
+def register(request, backend='django.contrib.auth.backends.ModelBackend'):
     registered = False
 
     if request.method == "POST":
