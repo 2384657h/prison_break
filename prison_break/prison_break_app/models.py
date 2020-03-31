@@ -14,7 +14,7 @@ class UserProfile(models.Model):
 		return self.user.username
 
 class Character(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
 
 	char_ID = models.IntegerField(default = 0)
 	posx = models.IntegerField(default =0)
