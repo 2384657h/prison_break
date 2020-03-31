@@ -14,8 +14,9 @@ Sign up
 <script>
   window.onload = function() {
  // add your code change here
-    $("#inputUsername").change(function(){
+    $("#inputUsername").change(function(data){
       var username = $(this).val();
+      
 
 
       $.ajax({
@@ -28,6 +29,9 @@ Sign up
           if (data.is_taken) {
             $('#inputUsername')[0].setCustomValidity('Username already taken');
 
+          }
+          else{
+            $('#inputUsername')[0].setCustomValidity('');
           }
         }
       });
