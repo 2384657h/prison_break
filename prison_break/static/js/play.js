@@ -514,7 +514,7 @@ upArrowImg.src = upArrow;
 const downArrowImg = new Image();
 downArrowImg.src = downArrow;
 
-//
+
 var possible_start_rooms = ["Cells", "Day Room", "Courtyard"]
 
 function getRandomInt(max) {
@@ -595,6 +595,7 @@ let found_k3 = false;
 var buffer = 82;
 
 let isNewGame = document.getElementById("newgamecheck").value;
+let charcodeInput = document.getElementById("charCode").value;
 
 function modeSelectionLoop(timestamp){
 	ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
@@ -669,11 +670,16 @@ function modeSelectionLoop(timestamp){
 			}
 			else{
 				//not new game, straight into
-				player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height - GAME_HEIGHT/6);
 
-
-				playerSelected = true;
+				player.characterCode = parseInt(charcodeInput);
+				//change speed of character if strongman
+				if (player.characterCode  == 3){
+					player.maxSpeedx = 3;
+					player.maxSpeedy = 3;
+				}
 				currentRoom = possible_start_rooms[getRandomInt(3)];
+				player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
+				playerSelected = true;
 				timeOfRoomChange = timestamp;
 				gameLoop();
 			}

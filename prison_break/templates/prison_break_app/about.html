@@ -1,8 +1,28 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
 {% block title_block %}
+
 About
 {% endblock %}
 
 {% block body_block %}
+<link rel="stylesheet"  href="{% static "css/about.css" %}" type="text/css"></link>
+<div class="row">
+    <div class="col-sm-6">
+        <h1>About</h1>
+        <p id="about">Prison break is a game created by Mark Harris, Andrew Parker Calum Macphee and Hector Jones. It was created for our 2nd year university project, for a web application course.
+            There is only one objective in the game, to escape. You must do whatever it takes, and take advantage of all of your chosen characters skills to ensure a successful break out. Throughout the game you may find items, these are key components to your escape, and without them you will fail.</p>
+    </div>
+
+    <div class="col-sm-6">
+        <h1>FAQ</h1>
+        <ul id="FAQ">
+            <li><h3>What languages where used to create the web app?</h3><p>html, css, javascript, ajax, django, python</p></li>
+            <li><h3>How do i play?</h3><p>Play, or if you need help heres the tutorial</p></li>
+            <li><h3>FAQ 3</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam aspernatur odit distinctio quam, eaque sit maiores fuga eius animi. Sint minima dignissimos similique quod, excepturi voluptatem dolor velit officiis ab.</p></li>
+            <li><h3>FAQ 4</h3><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore error dignissimos corrupti temporibus officia sunt. Natus odit aut aspernatur ab repellat eligendi, assumenda quidem saepe doloribus, error nostrum illum. Quidem!</p></li>
+            <li><h3>FAQ 5</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur laborum iste non eum minima adipisci pariatur quisquam perspiciatis delectus iure rerum enim, quae distinctio asperiores iusto similique tempore placeat illum!</p></li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

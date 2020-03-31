@@ -53,7 +53,7 @@ def update_counter(request):
             this_user.character.posx = coordY
         message = 'update successful'
 
-    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.userprofile.newGame) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
+    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.character.char_ID) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
 
 @csrf_exempt
 def character_select(request):
@@ -64,6 +64,7 @@ def character_select(request):
         character = Character()
         current_user = request.user
         character.user = current_user
+        character.char_ID = character_code
         character.posx = coordX
         character.posy = coordY
         #set newgame two zero, i.e. NOT a new game
@@ -102,6 +103,27 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
 
 
     return render(request, 'prison_break_app/signup.html' )
+
+
+def updatePhoto(request):
+    userProfile = UserProfile.objects.get(user = request.user.id)
+    userProfile.picture = request.FILES['profilepic']
+    userProfile.save()
+    return render(request, 'prison_break_app/profile.html')
+
+def updateUsername(request):
+    user = request.user
+    user.username=request.POST.get('username')
+    user.save()
+    return render(request, 'prison_break_app/profile.html')
+
+def updateEmail(request):
+    user = request.user
+    user.email=request.POST.get('email')
+    user.save()
+    return render(request, 'prison_break_app/profile.html')
+        
+
 
 def signin(request):
     if request.method == "POST":

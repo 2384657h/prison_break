@@ -1,0 +1,23 @@
+.col-sm-6{
+    text-align: center;
+}
+
+h1{
+    color:red;
+    padding: 5%;
+}
+ul{
+    list-style-type: none;
+}
+#about{
+    margin: 2% 10% 0% 10%;
+}
+#FAQ h3{
+    color: red;
+    margin-top: 3%;
+}
+#FAQ p{
+    margin:0;
+    padding: 0;
+}
+

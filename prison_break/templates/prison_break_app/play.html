@@ -14,5 +14,10 @@ Game Screen
 	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
 	<input value="{% url 'prison_break_app:character_select' %}" hidden ="hidden" id="charSelectURL" />
 	<input value="{{ user.userprofile.newGame }}" hidden ="hidden" id="newgamecheck" />
+	<input value="{{ user.character.char_ID }}" hidden ="hidden" id="charCode" />
     <script src="{% static "js/play.js" %}"></script>
 {% endblock %}
+
+
+
+
