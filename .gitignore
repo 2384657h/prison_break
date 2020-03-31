@@ -2,6 +2,7 @@
 __pycache__
 db.sqlite3
 prison_break/media
+.DS_Store
 
 
 

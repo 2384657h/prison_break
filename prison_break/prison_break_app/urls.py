@@ -11,10 +11,14 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('register/', views.register, name='register'),
     path('update_counter/', views.update_counter, name='update_counter'),
+    path('character_select/', views.character_select, name='character_select'),
     path('login/', views.login, name='login'),
     path('signin/', views.signin, name='signin'),
     path('profile/', views.profile, name='profile'),
     path('logout/', views.userlogout, name='logout'),
+    path('updatePhoto', views.updatePhoto, name='updatePhoto'),
+    path('updateUsername', views.updateUsername, name='updateUsername'),
+    path('updateEmail', views.updateEmail, name='updateEmail'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
     path('ajax/validate_username/', views.validate_username, name='validate_username')
 ]

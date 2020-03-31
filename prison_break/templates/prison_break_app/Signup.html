@@ -1,5 +1,7 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
 {% block head_block %}
 <link rel="stylesheet"  href="{% static "css/signup.css" %}" type="text/css"></link>
 {% endblock %}
@@ -85,7 +87,7 @@ Sign up
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" id="thesubmit" type="submit">Register</button>
               <hr class="my-4">
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit" value="POST"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
+              <a href="{% provider_login_url "google" %}" class="btn btn-primary">Login with Google</a>
             </form>
           </div>
         </div>

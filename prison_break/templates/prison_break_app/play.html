@@ -1,20 +1,22 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
+{% block head_block %}
+<link rel="stylesheet"  href="{% static "css/play.css" %}" type="text/css"></link>
+{% endblock %}
 {% block title_block %}
 Game Screen
 {% endblock %}
 
 {% block body_block %}
-        <style>
-            #gameScreen{
-				border : 1px solid black;
-                display: block;
-                margin: 0 auto;
-                background: white;
-            }
-        </style>
+
 	<button type="button" id="save_btn">Save Game?</button>
     <canvas id="gameScreen" width="600" height="600"></canvas>
 	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
+	<input value="{% url 'prison_break_app:character_select' %}" hidden ="hidden" id="charSelectURL" />
+	<input value="{{ user.userprofile.newGame }}" hidden ="hidden" id="newgamecheck" />
     <script src="{% static "js/play.js" %}"></script>
 {% endblock %}
+
+
+
+
