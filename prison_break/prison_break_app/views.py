@@ -95,7 +95,7 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
         profile.save()
 
         registered = True
-        auth_login(request,user)
+        auth_login(request,user, backend='django.contrib.auth.backends.ModelBackend')
     else:
         print("Error not a post request")
 
