@@ -6,15 +6,22 @@ class UserProfile(models.Model):
 	score = models.IntegerField(default=0)
 	picture = models.ImageField(upload_to='profile_image', blank=True)
 
+	#check if newGame
+	newGame = models.IntegerField(default=1)
+
 
 	def __str__(self):
 		return self.user.username
 
 class Character(models.Model):
-	char_ID = models.CharField(max_length=30,unique=True)
-	current_room = models.CharField(max_length=30,unique=False)
-	item_1 = models.CharField(max_length=128)
-	item_2 = models.CharField(max_length=128)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+	char_ID = models.IntegerField(default = 0)
+	posx = models.IntegerField(default =0)
+	posy = models.IntegerField(default =0)
+	#current_room = models.CharField(max_length=30,unique=False)
+	#item_1 = models.CharField(max_length=128)
+	#item_2 = models.CharField(max_length=128)
 
 class Leaderboard(models.Model):
 	userp = models.OneToOneField(UserProfile, on_delete=models.CASCADE, default=None)

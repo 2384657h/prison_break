@@ -531,6 +531,8 @@ let found_k3 = false;
 
 var buffer = 82;
 
+let isNewGame = document.getElementById("newgamecheck").value;
+
 function modeSelectionLoop(timestamp){
 	ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
 
@@ -596,10 +598,24 @@ function modeSelectionLoop(timestamp){
 		}
 		if (mode == "Ranked"){
 			player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height - GAME_HEIGHT/6);
-			characterSelectionLoop();
+
+			//if newGame, go into character selection
+			if (isNewGame==1){
+				characterSelectionLoop();
+			}
+			else{
+				//not new game, straight into
+				player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
+				timestamp = 0;
+				lastTime = 0;
+				gameLoop();
+			}
+			
 		}
 	}
 }
+
+let urlSelect = document.getElementById("charSelectURL").value;
 
 
 function characterSelectionLoop(timestamp){
@@ -715,6 +731,17 @@ function characterSelectionLoop(timestamp){
 	if (!playerSelected){
 		requestAnimationFrame(characterSelectionLoop);
 	}else{
+		//character selected, send data to server
+		$.ajax({
+			url: urlSelect,
+			data: {'character': player.characterCode, 'posX' : player.position.x, 'posY': player.position.y},
+			type: 'POST'
+		}).done(function(response){
+			console.log(response);
+		});
+
+
+
 		player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
 		timestamp = 0;
 		lastTime = 0;
@@ -728,12 +755,12 @@ let urlC = document.getElementById("counterURL").value;
 
 $(document).ready(function(){
 	$('#save_btn').click(function(){
-		if (person.keyFound){
+		if (!player.key1Found){
 			//alert("saved!");
 			//counter++;
 			$.ajax({
 				url: urlC,
-				data: {'counter': 1},
+				data: {'counter': 1, 'posX' : player.position.x, 'posY': player.position.y},
 				type: 'POST'
 			}).done(function(response){
 				console.log(response);

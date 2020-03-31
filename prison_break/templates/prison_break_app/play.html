@@ -16,5 +16,7 @@ Game Screen
 	<button type="button" id="save_btn">Save Game?</button>
     <canvas id="gameScreen" width="600" height="600"></canvas>
 	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
+	<input value="{% url 'prison_break_app:character_select' %}" hidden ="hidden" id="charSelectURL" />
+	<input value="{{ user.userprofile.newGame }}" hidden ="hidden" id="newgamecheck" />
     <script src="{% static "js/play.js" %}"></script>
 {% endblock %}
