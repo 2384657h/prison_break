@@ -608,7 +608,7 @@ function modeSelectionLoop(timestamp){
 				//not new game, straight into
 				player.characterCode = parseInt(charcodeInput);
 				//change speed of character if strongman
-				if (parseInt(charcodeInput ==3)){
+				if (parseInt(charcodeInput) ==3){
 					player.maxSpeedx=3;
 					player.maxSpeedy=3;
 				}
