@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from prison_break_app.models import UserProfile, Leaderboard
+from prison_break_app.models import UserProfile, Leaderboard, Character
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import itertools
 from django.http import JsonResponse
-
+from django.dispatch import receiver
+import allauth.socialaccount.signals 
 
 
 
@@ -39,13 +40,43 @@ def login(request):
 def update_counter(request):
     if request.method == 'POST':
         score_count = request.POST['counter']
+        coordX = request.POST['posX']
+        coordY = request.POST['posY']
         this_user = request.user
         this_user.userprofile.score = this_user.userprofile.score + int(score_count)
         this_user.save()
         this_user.userprofile.save()
+
+        if this_user.userprofile.newGame == 0:
+            #save character data
+            this_user.character.posx = coordX
+            this_user.character.posx = coordY
         message = 'update successful'
 
-    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score))
+    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.userprofile.newGame) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
+
+@csrf_exempt
+def character_select(request):
+    if request.method == 'POST':
+        character_code = request.POST['character']
+        coordX = request.POST['posX']
+        coordY = request.POST['posY']
+        character = Character()
+        current_user = request.user
+        character.user = current_user
+        character.posx = coordX
+        character.posy = coordY
+        #set newgame two zero, i.e. NOT a new game
+        current_user.userprofile.newGame = 0
+        current_user.save()
+        current_user.userprofile.save()
+        current_user.character.save()
+
+        message = 'character selected'
+
+    return HttpResponse(message + " with coords: " + str(character.posx) + "," + str(character.posy))
+
+
 
 def register(request, backend='django.contrib.auth.backends.ModelBackend'):
     registered = False
@@ -55,6 +86,8 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
         user.save()
         profile = UserProfile()
         profile.user = user
+        #set to currently new game
+        profile.newGame = 1
         
         if 'profilepic' in request.FILES:
             profile.picture = request.FILES['profilepic']
@@ -62,7 +95,7 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
         profile.save()
 
         registered = True
-        auth_login(request,user)
+        auth_login(request,user, backend='django.contrib.auth.backends.ModelBackend')
     else:
         print("Error not a post request")
 
@@ -160,7 +193,17 @@ def validate_username(request):
     data = {'is_taken': User.objects.filter(username=username).exists()}
     return JsonResponse(data)
 
+@receiver(allauth.account.signals.user_signed_up)
+def populate_profile(sociallogin, user, **kwargs):
+    if sociallogin.account.provider == 'google':
+        user_data = user.socialaccount_set.filter(provider='google')[0].extra_data
+        picture_url = user_data['picture']
     
+    print(picture_url)
+    
+
+        
+
 
 
 

@@ -1,0 +1,11 @@
+#gameScreen{
+    border : 1px solid black;
+    display: block;
+    margin: 0 auto;
+    background: white;
+}
+body{
+    position: fixed; 
+    overflow-y: scroll;
+    width: 100%;
+}
