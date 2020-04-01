@@ -110,6 +110,7 @@ def updatePhoto(request):
     userProfile.save()
     return render(request, 'prison_break_app/profile.html')
 
+@csrf_exempt
 def updateUsername(request):
     user = request.user
     user.username=request.POST.get('username')
