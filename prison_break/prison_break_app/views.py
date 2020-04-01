@@ -10,8 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import itertools
 from django.http import JsonResponse
-from django.dispatch import receiver
-import allauth.socialaccount.signals 
+
 
 
 
@@ -197,14 +196,7 @@ def validate_username(request):
     data = {'is_taken': User.objects.filter(username=username).exists()}
     return JsonResponse(data)
 
-@receiver(allauth.account.signals.user_signed_up)
-def populate_profile(sociallogin, user, **kwargs):
-    if sociallogin.account.provider == 'google':
-        user_data = user.socialaccount_set.filter(provider='google')[0].extra_data
-        picture_url = user_data['picture']
-    
-    print(picture_url)
-    
+
 
         
 
