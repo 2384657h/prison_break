@@ -4,6 +4,7 @@ table{
     margin-left:auto; 
     margin-right:auto;
     margin-top: 5%;
+
 }
 
 td{
@@ -20,6 +21,7 @@ body {
   }
 
   #profile {
+    
     background-color: whitesmoke;
     width: 60%;
     height: 100%;
@@ -30,6 +32,8 @@ body {
     border-radius: 25px;
     padding: 5%;
     box-shadow:0px 0px 60px darkblue, 0px 0px 12px grey inset;
+    overflow: auto;
+    overflow-y: hidden;
 }
 
 #photo {
@@ -44,3 +48,5 @@ body {
 .modal-notify .modal-content {
     border-radius: 3px;
 }
+
+
