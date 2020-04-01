@@ -4,20 +4,6 @@
     margin: 0;
     padding: 0;
 }
-
-#background{
-    height: 100vh;
-    width: 100vw;
-    background-position: center;
-    background-repeat: repeat;
-    background-size: cover;
-          
-    overflow-x: hidden;
-    max-width:100%;
-    min-height: 100vh;
-        
-}
-
 body
 {
     font-family: sans-serif;
@@ -28,10 +14,10 @@ body
 #content{
     text-align:left;
     backdrop-filter: blur(6px);
-    overflow-x: hidden;
+    height: 100vh;
     width: 100vw;
     max-width: 100%;
-    min-height: 100vh;
+    max-height: 100%;
   }
 
   
