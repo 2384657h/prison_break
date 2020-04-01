@@ -101,7 +101,7 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
 
 
 
-    return render(request, 'prison_break_app/signup.html' )
+    return render(request, 'prison_break_app/Signup.html' )
 
 
 def updatePhoto(request):
