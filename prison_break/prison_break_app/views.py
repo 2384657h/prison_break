@@ -10,8 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import itertools
 from django.http import JsonResponse
-from django.dispatch import receiver
-import allauth.socialaccount.signals 
+
 
 
 
@@ -36,6 +35,8 @@ def signup(request):
 def login(request):
     return render(request, 'prison_break_app/login.html')
 
+
+#csrf exempt as no sensitive user data is being passed in POST request
 @csrf_exempt
 def update_counter(request):
     if request.method == 'POST':
@@ -43,6 +44,7 @@ def update_counter(request):
         coordX = request.POST['posX']
         coordY = request.POST['posY']
         this_user = request.user
+        #increment user score
         this_user.userprofile.score = this_user.userprofile.score + int(score_count)
         this_user.save()
         this_user.userprofile.save()
@@ -55,12 +57,15 @@ def update_counter(request):
 
     return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.character.char_ID) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
 
+#csrf exempt as no sensitive user data is being passed in POST request
 @csrf_exempt
 def character_select(request):
     if request.method == 'POST':
         character_code = request.POST['character']
         coordX = request.POST['posX']
         coordY = request.POST['posY']
+        #make new character for current user
+        #fill with data
         character = Character()
         current_user = request.user
         character.user = current_user
@@ -102,7 +107,7 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
 
 
 
-    return render(request, 'prison_break_app/signup.html' )
+    return render(request, 'prison_break_app/Signup.html' )
 
 
 def updatePhoto(request):
@@ -111,8 +116,11 @@ def updatePhoto(request):
     userProfile.save()
     return render(request, 'prison_break_app/profile.html')
 
+@csrf_exempt
 def updateUsername(request):
     user = request.user
+    if Leaderboard.objects.filter(userp=user).exists():
+        leaderboardob = Leaderboard.objects.get(userp=user).delete()
     user.username=request.POST.get('username')
     user.save()
     return render(request, 'prison_break_app/profile.html')
@@ -160,28 +168,29 @@ def leaderboard(request):
 
         
         score = theuser.userprofile.score
+        if score != 0:
+            score_list[name] = score
 
-        score_list[name] = score
-
-    sortedscores = {k: v for k, v in sorted(score_list.items(), key=lambda x: x[1], reverse = True)}
-
-    x = itertools.islice(sortedscores.items(), 0, 9)
     
-    for key, value in x:
+
+    
+    
+    for key, value in score_list.items():
         leaderboard = Leaderboard()
        
-        leaderboard.userp = UserProfile.objects.get(user=User.objects.get(username=key))
+        leaderboard.userp = User.objects.get(username=key)
         leaderboard.name = key
         leaderboard.lscore = value
         if Leaderboard.objects.filter(name=leaderboard.name).exists():
             Leaderboard.objects.filter(name=leaderboard.name).update(lscore=leaderboard.lscore)
         else:
             leaderboard.save()
+    
 
 
 
     
-    leaderboards = Leaderboard.objects.all()
+    leaderboards = Leaderboard.objects.all().order_by('lscore')[:10]
     context_dict = {}
 
     context_dict['Leaderboard'] = leaderboards
@@ -194,14 +203,7 @@ def validate_username(request):
     data = {'is_taken': User.objects.filter(username=username).exists()}
     return JsonResponse(data)
 
-@receiver(allauth.account.signals.user_signed_up)
-def populate_profile(sociallogin, user, **kwargs):
-    if sociallogin.account.provider == 'google':
-        user_data = user.socialaccount_set.filter(provider='google')[0].extra_data
-        picture_url = user_data['picture']
-    
-    print(picture_url)
-    
+
 
         
 

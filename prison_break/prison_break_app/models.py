@@ -7,6 +7,8 @@ class UserProfile(models.Model):
 	picture = models.ImageField(upload_to='profile_image', blank=True)
 
 	#check if newGame
+	#=1 if new game
+	#=0 if NOT new game
 	newGame = models.IntegerField(default=1)
 
 
@@ -19,11 +21,15 @@ class Character(models.Model):
 	char_ID = models.IntegerField(default = 0)
 	posx = models.IntegerField(default =0)
 	posy = models.IntegerField(default =0)
+
+	#in case we use these fields
+	#for more complex game
+	########
 	#current_room = models.CharField(max_length=30,unique=False)
 	#item_1 = models.CharField(max_length=128)
 	#item_2 = models.CharField(max_length=128)
 
 class Leaderboard(models.Model):
-	userp = models.OneToOneField(UserProfile, on_delete=models.CASCADE, default=None)
+	userp = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
 	name = models.CharField(max_length=100)
 	lscore = models.IntegerField(default=0)

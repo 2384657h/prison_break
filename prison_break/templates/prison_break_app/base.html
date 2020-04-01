@@ -29,6 +29,8 @@
     </head>
 
     <body>
+      <div id="background">
+        <div id="content">
       
     
       <div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -80,22 +82,15 @@
             </div>
           </nav>
           </div>
-          <div id="background">
+        
           <style>
             #background{
               background-image:url('{% static "images/background.jpg" %}');
-             
-              height: 100vh;
-              width: 100vw;
-              background-position: center;
-              background-repeat: no-repeat;
-              background-size: cover;
-              max-width:100%;
-            
+
             }
           </style>
          
-          <div id="content">
+          
            
           
         {% block body_block %}
@@ -106,5 +101,7 @@
 
     
     </body>
+    {% block outsidebody %}
+    {% endblock %}
 
 </html>
