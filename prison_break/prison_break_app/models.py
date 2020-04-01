@@ -24,6 +24,6 @@ class Character(models.Model):
 	#item_2 = models.CharField(max_length=128)
 
 class Leaderboard(models.Model):
-	userp = models.OneToOneField(UserProfile, on_delete=models.CASCADE, default=None)
+	userp = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
 	name = models.CharField(max_length=100)
 	lscore = models.IntegerField(default=0)

@@ -53,7 +53,7 @@ def update_counter(request):
             this_user.character.posx = coordY
         message = 'update successful'
 
-    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.userprofile.newGame) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
+    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.character.char_ID) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
 
 @csrf_exempt
 def character_select(request):
@@ -64,6 +64,7 @@ def character_select(request):
         character = Character()
         current_user = request.user
         character.user = current_user
+        character.char_ID = character_code
         character.posx = coordX
         character.posy = coordY
         #set newgame two zero, i.e. NOT a new game
@@ -110,8 +111,11 @@ def updatePhoto(request):
     userProfile.save()
     return render(request, 'prison_break_app/profile.html')
 
+@csrf_exempt
 def updateUsername(request):
     user = request.user
+    if Leaderboard.objects.filter(userp=user).exists():
+        leaderboardob = Leaderboard.objects.get(userp=user).delete()
     user.username=request.POST.get('username')
     user.save()
     return render(request, 'prison_break_app/profile.html')
@@ -155,7 +159,7 @@ def leaderboard(request):
 
     for theuser in users:
         name = theuser.username
-        UserProfile.objects.get_or_create(user=theuser)
+        UserProfile.objects.get(user=theuser)
 
         
         score = theuser.userprofile.score
@@ -169,7 +173,7 @@ def leaderboard(request):
     for key, value in x:
         leaderboard = Leaderboard()
        
-        leaderboard.userp = UserProfile.objects.get(user=User.objects.get(username=key))
+        leaderboard.userp = User.objects.get(username=key)
         leaderboard.name = key
         leaderboard.lscore = value
         if Leaderboard.objects.filter(name=leaderboard.name).exists():
