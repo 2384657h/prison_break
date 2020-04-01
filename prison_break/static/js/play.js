@@ -70,6 +70,11 @@ class Player {
 			gemImg.src = "/static/images/playerGem.png";
 			ctx.drawImage(gemImg, this.position.x + this.width/2 - this.width/4,this.position.y - 27.5,12.5,25);
 		}
+		if (mode == "Ranked" && playerSelected){
+			var gemImg = new Image();
+			gemImg.src = "/static/images/playerGem.png";
+			ctx.drawImage(gemImg, this.position.x + this.width/2 - this.width/4,this.position.y - 27.5,12.5,25);
+		}
 	}
 
 	hasFoundKey(keyX,keyY,keyName){
@@ -134,6 +139,15 @@ class Person {
 	}
 
 	performMovement(){
+
+		if(distracted){
+			this.maxSpeedx = 5;
+			this.maxSpeedy = 5;
+		}else{
+			this.maxSpeedx = 1;
+			this.maxSpeedy = 1;
+		}
+
 		if (!canPlayerInteract(this.position.x - 5, this.position.y - 5, this.width + 10, this.height +10)){
 			if (this.movement == 'vertical'){
 				if (this.currentDirection == 'up'){
@@ -171,9 +185,13 @@ class Person {
 					}
 				}
 			}
-		}else{
-			this.speedx = 0;
-			this.speedy = 0;
+			if (this.movement == 'stationary'){
+				this.speedx = 0;
+				this.speedy = 0;
+			}
+			}else{
+				this.speedx = 0;
+				this.speedy = 0;
 		}
 	}
 
@@ -334,13 +352,221 @@ class InputHandler {
 										break;
 									case 5:
 										currentRoom = "Showers";
-										player.move_player(player.width/2, GAME_HEIGHT/2 - player.height/2);
+										player.move_player(player.width/2 + 25, GAME_HEIGHT/2 - player.height/2);
 										timeOfRoomChange = lastTime;
 										break;
 									case 6:
 										currentRoom = "Cells";
 										player.move_player(GAME_WIDTH - player.width/2 - 25, GAME_HEIGHT/2 - player.height/2);
 										timeOfRoomChange = lastTime;
+										break;
+									case 7:
+										currentRoom = "Cafeteria";
+										player.move_player(GAME_WIDTH - player.width/2 - 25, GAME_HEIGHT/2 - player.height/2);
+										timeOfRoomChange = lastTime;
+										break;
+									case 8:
+										currentRoom = "Courtyard";
+										player.move_player(player.width/2 + 25, GAME_HEIGHT/2 - player.height/2);
+										timeOfRoomChange = lastTime;
+										break;
+									case 9:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 9;
+										stopAllMovement = true;
+										break;
+									case 10:
+										if (storageRoomKeyFound){
+											currentRoom = "Storage Room";
+											player.move_player(GAME_WIDTH/2 - player.width/2, player.height/2 + 10);
+											timeOfRoomChange = lastTime;
+										}else{
+											timeOfTextStart = lastTime;
+											characterSpeaking = 0;
+											stopAllMovement = true;
+											speakingReason = "locked";
+										}
+										break;
+									case 11:
+										storageRoomKeyFound = true;
+										break;
+
+									//exit hallway to courtyard
+									case 12:
+										currentRoom = "Courtyard";
+										player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height/2 - 30);
+										timeOfRoomChange = lastTime;
+										break;
+									case 13:
+										if (distracted){
+											currentRoom = "Exit Hallway";
+											player.move_player(GAME_WIDTH/2 - player.width/2,player.height + 5);
+											timeOfRoomChange = lastTime;
+										}else{
+											timeOfTextStart = lastTime;
+											characterSpeaking = 0;
+											stopAllMovement = true;
+											speakingReason = "distraction";
+										}
+										break;
+
+									//talk to Ralph
+									case 14:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 14;
+										stopAllMovement = true;
+										break;
+									//talk to Tony
+									case 15:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 15;
+										stopAllMovement = true;
+										break;
+
+									//storage to cafeteria
+									case 16:
+										if (storageRoomKeyFound){
+											currentRoom = "Cafeteria";
+											player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height/2 - 30);
+											timeOfRoomChange = lastTime;
+										}
+										break;
+									//get escape key in stroage room
+									case 17:
+										escapeKeyFound = true;
+										break;
+									case 18:
+										if(wardenKeyFound){
+											currentRoom = "Warden's Office";
+											player.move_player(player.width/2 + 25, GAME_HEIGHT/2 - player.height/2);
+											timeOfRoomChange = lastTime;
+										}else{
+											timeOfTextStart = lastTime;
+											characterSpeaking = 0;
+											stopAllMovement = true;
+											speakingReason = "locked";
+										}
+										break;
+									case 19:
+										currentRoom = "Exit Hallway";
+										player.move_player(GAME_WIDTH - player.width/2 - 25, GAME_HEIGHT/2 - player.height/2);
+										timeOfRoomChange = lastTime;
+										break;
+									case 20:
+										if (escapeKeyFound){
+											rankedGameFinished = true;
+										}else{
+											timeOfTextStart = lastTime;
+											characterSpeaking = 0;
+											stopAllMovement = true;
+											speakingReason = "locked";
+										}
+										break;
+									case 21:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 21;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 22:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 22;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 23:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 23;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 24:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 24;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 25:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 25;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 26:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 26;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 27:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 27;
+										stopAllMovement = true;
+										break;
+									case 28:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 0;
+										stopAllMovement = true;
+										speakingReason = "key";
+										wardenKeyFound = true;
+										break;
+									case 29:
+										if (player.characterCode == 2){
+											timeOfTextStart = lastTime;
+											characterSpeaking = 0;
+											stopAllMovement = true;
+											speakingReason = "key";
+											escapeKeyFound = true;
+										}else{
+											timeOfTextStart = lastTime;
+											characterSpeaking = 0;
+											stopAllMovement = true;
+											speakingReason = "character";
+										}
+										break;
+									case 30:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 30;
+										stopAllMovement = true;
+										break;
+									case 31:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 31;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 32:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 32;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 33:
+										timeOfTextStart = lastTime;
+										characterSpeaking = 33;
+										stopAllMovement = true;
+										randomTextInt = getRandomInt(3);
+										break;
+									case 34:
+										trophy1found = true;
+										timeOfTextStart = lastTime;
+										characterSpeaking = 0;
+										stopAllMovement = true;
+										speakingReason = "value";
+										break;
+									case 35:
+										trophy2found = true;
+										timeOfTextStart = lastTime;
+										characterSpeaking = 0;
+										stopAllMovement = true;
+										speakingReason = "value";
+										break;
+									case 36:
+										trophy3found = true;
+										timeOfTextStart = lastTime;
+										characterSpeaking = 0;
+										stopAllMovement = true;
+										speakingReason = "value";
 										break;
 								}
 							}
@@ -419,10 +645,6 @@ const GAME_HEIGHT = 600;
 
 ctx.clearRect(0,0,608,608);
 
-var currentRoom = "Courtyard";
-var playerSelected = false;
-var modeSelected = false;
-
 //relates to the first game loop (selectionLoop)
 var gap_space = 32;
 var selection_width = (GAME_WIDTH - 4 * gap_space)/3;
@@ -430,9 +652,11 @@ var selection_height = (GAME_WIDTH - 4 * gap_space)/3;
 
 //refers to generic prioner interactions
 let genericPrisoner = ["Move!","Get out of my way!","What do you want!?"];
+let nicePrisoner = ["Excuse me", "Move... please.", "What can I do for you?"]
 
 //refers to generic guard interactions
 let genericGuard = ["Move along, prisoner!","Stay out of trouble, prisoner!","I'm watching you."]
+let niceGuard = ["Hello.","How are you doing today?","Someone giving you trouble?"]
 
 var randomTextInt;
 
@@ -448,6 +672,8 @@ var ranked_hovered_over_object;
 //refers to times for temporary text display
 var timeOfRoomChange;
 var timeOfTextStart;
+var timeOfGameStart;
+var timeOfGameEnd;
 var characterSpeaking;
 var stopAllMovement = false;
 var speakingReason;
@@ -477,6 +703,42 @@ let demoKeyData2 = {
 	width: 20
 }
 
+//regular key
+let storageKeyData = {
+	x: GAME_WIDTH/2 + GAME_WIDTH/6,
+	y: GAME_HEIGHT/6,
+	height: 10,
+	width: 20
+}
+
+let escape1KeyData = {
+	x: GAME_WIDTH/2 - GAME_WIDTH/6,
+	y: GAME_HEIGHT/6 + GAME_HEIGHT/2,
+	height: 10,
+	width: 20
+}
+
+let trophy1Data = {
+	x: GAME_WIDTH/2 + GAME_WIDTH/6,
+	y: GAME_HEIGHT/3,
+	height: 32,
+	width: 32
+}
+
+let trophy2Data = {
+	x: GAME_WIDTH/6,
+	y: GAME_HEIGHT/6 + GAME_HEIGHT/2,
+	height: 32,
+	width: 32
+}
+
+let trophy3Data = {
+	x: GAME_WIDTH - GAME_WIDTH/6,
+	y: GAME_HEIGHT - GAME_HEIGHT/6,
+	height: 32,
+	width: 32
+}
+
 //will be false when items are not touched by the player (demo)
 var demoCanInteract1;
 var demoCanInteract2;
@@ -486,6 +748,23 @@ var demoCanInteract3;
 var arrow_height = 32;
 var arrow_width = 32;
 
+var rankedGameFinished = false;
+var gameScore;
+
+//thing that will need to be saved
+var spokenToJim = false;
+var spokenToTony = false;
+var storageRoomKeyFound = false;
+var escapeKeyFound = false;
+var distracted = false;
+var wardenKeyFound = false;
+var trophy1found = false;
+var trophy2found = false;
+var trophy3found = false;
+var currentRoom;
+var playerSelected = false;
+var currentRunningTime;
+var modeSelected = false;
 
 //key image
 const keyImg = new Image();
@@ -505,6 +784,10 @@ var leftArrow = "/static/images/LeftArrow.png";
 var upArrow = "/static/images/UpArrow.png";
 var downArrow = "/static/images/DownArrow.png";
 
+var toilet = "/static/images/toilet.png";
+var rock = "/static/images/Cobblestone.png";
+var trophy = "/static/images/Trophy.png";
+
 const rightArrowImg = new Image();
 rightArrowImg.src = rightArrow;
 const leftArrowImg = new Image();
@@ -513,6 +796,13 @@ const upArrowImg = new Image();
 upArrowImg.src = upArrow;
 const downArrowImg = new Image();
 downArrowImg.src = downArrow;
+
+const toiletImg = new Image();
+toiletImg.src = toilet;
+const rockImg = new Image();
+rockImg.src = rock;
+const trophyImg = new Image();
+trophyImg.src = trophy;
 
 
 var possible_start_rooms = ["Cells", "Day Room", "Courtyard"]
@@ -560,25 +850,29 @@ let demowanderer2 = new Person(GAME_WIDTH/2 - GAME_WIDTH/3, GAME_HEIGHT/2 + GAME
 let demowanderer3 = new Person(GAME_WIDTH/2 + GAME_WIDTH/4, GAME_HEIGHT/2 + GAME_HEIGHT/4, 'horizontal', 'right', prisoner1);
 let demowanderer4 = new Person(GAME_WIDTH * 0.75 - 30, GAME_HEIGHT/2 + GAME_HEIGHT/4, 'vertical', 'down', prisoner3);
 
-let guardwanderer1 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard1);
-let guardwanderer2 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard1);
-let guardwanderer3 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard1);
-let guardwanderer4 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard2);
-let guardwanderer5 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard2);
+let guardwanderer1 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'stationary', 'null', guard1);
+let guardwanderer2 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 + GAME_HEIGHT/6, 'horizontal', 'right', guard1);
+let guardwanderer4 = new Person(GAME_WIDTH/2 - GAME_WIDTH/8, GAME_HEIGHT/4, 'vertical', 'up', guard3);
+let guardwanderer3 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'left', guard2);
+let guardwanderer5 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 + GAME_HEIGHT/4, 'vertical', 'down', guard2);
 let guardwanderer6 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard2);
-let guardwanderer7 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard3);
-let guardwanderer8 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard3);
-let guardwanderer9 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', guard3);
+let guardwanderer7 = new Person(GAME_WIDTH/6, GAME_HEIGHT/2, 'vertical', 'up', guard3);
+let guardwanderer8 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 + GAME_HEIGHT/4, 'stationary', 'null', guard1);
+let guardwanderer9 = new Person(GAME_WIDTH - 30, GAME_HEIGHT/2, 'stationary', 'null', guard1);
+let guardwanderer10 = new Person(GAME_WIDTH/8 , GAME_HEIGHT - GAME_HEIGHT/8 - GAME_HEIGHT/16, 'horizontal', 'right', guard2);
 
-let prisonerwanderer1 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner1);
-let prisonerwanderer2 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner1);
-let prisonerwanderer3 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner1);
-let prisonerwanderer4 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner2);
-let prisonerwanderer5 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner2);
-let prisonerwanderer6 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner2);
-let prisonerwanderer7 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner3);
-let prisonerwanderer8 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner3);
+let prisonerwanderer1 = new Person(GAME_WIDTH/2 - GAME_WIDTH/6, GAME_HEIGHT/2 + GAME_HEIGHT/4, 'horizontal', 'left', prisoner1);
+let prisonerwanderer2 = new Person(GAME_WIDTH/3 - GAME_WIDTH/6, GAME_HEIGHT/3 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner1);
+let prisonerwanderer3 = new Person(GAME_WIDTH/2 - GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'stationary', 'null', prisoner1);
+let prisonerwanderer4 = new Person(100,100, 'stationary', 'null', prisoner2);
+let prisonerwanderer5 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/3 - GAME_HEIGHT/8, 'stationary', 'null', prisoner2);
+let prisonerwanderer6 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 + GAME_HEIGHT/4, 'vertical', 'up', prisoner2);
+let prisonerwanderer7 = new Person(100,60, 'stationary', 'null', prisoner3);
+let prisonerwanderer8 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT - 70, 'horizontal', 'right', prisoner3);
 let prisonerwanderer9 = new Person(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 - GAME_HEIGHT/4, 'horizontal', 'right', prisoner3);
+let prisonerwanderer10 = new Person(GAME_WIDTH -100, GAME_HEIGHT/8, 'vertical', 'up', prisoner1);
+let prisonerwanderer11 = new Person(GAME_WIDTH -100, GAME_HEIGHT/2 + GAME_HEIGHT/8, 'horizontal', 'right', prisoner2);
+let prisonerwanderer12 = new Person(GAME_WIDTH -100, GAME_HEIGHT/2 + GAME_HEIGHT/8, 'horizontal', 'right', prisoner2);
 
 
 new InputHandler(player);
@@ -681,6 +975,8 @@ function modeSelectionLoop(timestamp){
 				player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
 				playerSelected = true;
 				timeOfRoomChange = timestamp;
+				timeOfGameStart = timestamp;
+				player.characterCode = 1;
 				gameLoop();
 			}
 			
@@ -815,6 +1111,7 @@ function characterSelectionLoop(timestamp){
 
 		player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
 		timeOfRoomChange = timestamp;
+		timeOfGameStart = timestamp;
 		gameLoop();
 	}
 }
@@ -842,14 +1139,38 @@ $(document).ready(function(){
 
 function gameLoop(timestamp){
 
-
 	let deltaTime = timestamp-lastTime;
 	lastTime = timestamp
+	
 
 	ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
 
-	player.update(deltaTime);
-	player.draw(ctx);
+	//player speaking/thinking
+	if (timestamp < timeOfTextStart + 700 && characterSpeaking == 0){
+		ctx.font = "12px Arial";
+		ctx.textAlign = 'center';
+		ctx.fillStyle = "#000";
+		if (speakingReason == "locked"){
+			ctx.fillText("This door is locked", player.position.x, player.position.y + player.height + 20);
+		}
+		if (speakingReason == "character"){
+			ctx.fillText("I can't do anything here.", player.position.x, player.position.y + player.height + 20);
+		}
+		if (speakingReason == "distraction"){
+			ctx.fillText("I need a distraction.", player.position.x, player.position.y + player.height + 20);
+		}
+		if (speakingReason == "key"){
+			ctx.fillText("I got a key.", player.position.x, player.position.y + player.height + 20);
+		}
+		if (speakingReason == "value"){
+			ctx.fillText("I found something!", player.position.x, player.position.y + player.height + 20);
+		}
+		if (speakingReason == "stole"){
+			ctx.fillText("I stole the key.", player.position.x, player.position.y + player.height + 20);
+		}
+	}else if(characterSpeaking == 0){
+		stopAllMovement = false;
+	}
 
 	if (timestamp < timeOfRoomChange + 450){
 		ctx.fillStyle = "#000";
@@ -883,15 +1204,159 @@ function gameLoop(timestamp){
 		ctx.fillRect(0, GAME_HEIGHT/2 - door_width/2, door_height, door_width);
 	}
 
+	ctx.fillStyle = "#0000ff"; //always open
 	if (currentRoom == "Courtyard"){
-		guardwanderer1.performMovement();
-		guardwanderer1.update(deltaTime);
-		guardwanderer1.draw(ctx);
+		ctx.fillRect(0, GAME_HEIGHT/2 - door_width/2, door_height, door_width);
+	}else if(currentRoom == "Cafeteria"){
+		ctx.fillRect(GAME_WIDTH - door_height, GAME_HEIGHT/2 - door_width/2, door_height, door_width);
+	}
+
+	//sometime open
+	if (storageRoomKeyFound){
+		ctx.fillStyle = "#0000ff"; 
+	}else{
+		ctx.fillStyle = "#ff0000";
+	}
+	if (currentRoom == "Cafeteria"){
+		ctx.fillRect(GAME_WIDTH/2 - door_width/2, GAME_HEIGHT - door_height, door_width, door_height);
+	}else if(currentRoom == "Storage Room"){
+		ctx.fillRect(GAME_WIDTH/2 - door_width/2, 0, door_width, door_height);
+	}
+	
+	//open with distaction
+	if (distracted){
+		ctx.fillStyle = "#0000ff"; 
+	}else{
+		ctx.fillStyle = "#ff0000";
+	}
+	if (currentRoom == "Exit Hallway"){
+		ctx.fillRect(GAME_WIDTH/2 - door_width/2, 0, door_width, door_height);
+	}else if(currentRoom == "Courtyard"){
+		ctx.fillRect(GAME_WIDTH/2 - door_width/2, GAME_HEIGHT - door_height, door_width, door_height);
+	}
+
+	//open with distaction
+	if (wardenKeyFound){
+		ctx.fillStyle = "#0000ff"; 
+	}else{
+		ctx.fillStyle = "#ff0000";
+	}
+	if (currentRoom == "Exit Hallway"){
+		ctx.fillRect(GAME_WIDTH - door_height, GAME_HEIGHT/2 - door_width/2, door_height, door_width);
+	}else if(currentRoom == "Warden's Office"){
+		ctx.fillRect(0, GAME_HEIGHT/2 - door_width/2, door_height, door_width);
+	}
+
+	if (escapeKeyFound){
+		ctx.fillStyle = "#0000ff"; 
+	}else{
+		ctx.fillStyle = "#ff0000";
+	}
+	if (currentRoom == "Exit Hallway"){
+		ctx.fillRect(GAME_WIDTH/2 - door_width/2, GAME_HEIGHT - door_height, door_width, door_height);
+	}
+
+	if (currentRoom == "Courtyard"){
+		if (!distracted){
+			guardwanderer1.performMovement();
+			guardwanderer1.update(deltaTime);
+			guardwanderer1.draw(ctx);
+		}
 
 		prisonerwanderer1.performMovement();
 		prisonerwanderer1.update(deltaTime);
 		prisonerwanderer1.draw(ctx);
 
+		prisonerwanderer6.performMovement();
+		prisonerwanderer6.update(deltaTime);
+		prisonerwanderer6.draw(ctx);
+
+		prisonerwanderer7.performMovement();
+		prisonerwanderer7.update(deltaTime);
+		prisonerwanderer7.draw(ctx);
+
+
+		//interact with Jim
+		if(canPlayerInteract(prisonerwanderer7.position.x -5, prisonerwanderer7.position.y - 5, prisonerwanderer7.height + 10, prisonerwanderer7.width + 10)){
+			ranked_hovered_over_object = 9;
+		}
+
+		ctx.drawImage(rockImg, GAME_WIDTH/2 - 100,GAME_HEIGHT/2 - 100, 48,48);
+
+		//interact with rock
+		if(canPlayerInteract(GAME_WIDTH/2 - 100,GAME_HEIGHT/2 - 100, 48,48)){
+			ranked_hovered_over_object = 29;
+		}
+
+		if (timestamp < timeOfTextStart + 1000 && characterSpeaking == 9){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (!distracted){
+				ctx.fillText("Hey, I'll make a distraction if", prisonerwanderer7.position.x + 5, prisonerwanderer7.position.y + prisonerwanderer7.height + 20);
+				ctx.fillText("you talk to Tony in the Day Room.", prisonerwanderer7.position.x + 5, prisonerwanderer7.position.y + prisonerwanderer7.height + 30);
+			}else{
+				ctx.fillText("Let's take this place down!", prisonerwanderer7.position.x + 5, prisonerwanderer7.position.y + prisonerwanderer7.height + 20);
+			}
+		}else if(characterSpeaking == 9){
+			stopAllMovement = false;
+			spokenToJim = true;
+		}
+
+		//interact with guard
+		if(!distracted){
+			if(canPlayerInteract(guardwanderer1.position.x -5, guardwanderer1.position.y - 5, guardwanderer1.height + 10, guardwanderer1.width + 10)){
+				ranked_hovered_over_object = 21;
+			}
+		}
+
+		if (timestamp < timeOfTextStart + 1000 && characterSpeaking == 21){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericGuard[randomTextInt], guardwanderer1.position.x + 5, guardwanderer1.position.y + guardwanderer1.height + 20);
+			}else{
+				ctx.fillText(niceGuard[randomTextInt], guardwanderer1.position.x + 5, guardwanderer1.position.y + guardwanderer1.height + 20);
+			}
+		}else if(characterSpeaking == 21){
+			stopAllMovement = false;
+		}
+
+		//interact with prisoners
+		if(canPlayerInteract(prisonerwanderer6.position.x -5, prisonerwanderer6.position.y - 5, prisonerwanderer6.height + 10, prisonerwanderer6.width + 10)){
+			ranked_hovered_over_object = 22;
+		}
+
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 22){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericPrisoner[randomTextInt], prisonerwanderer6.position.x + 5, prisonerwanderer6.position.y + prisonerwanderer6.height + 20);
+			}else{
+				ctx.fillText(nicePrisoner[randomTextInt], prisonerwanderer6.position.x + 5, prisonerwanderer6.position.y + prisonerwanderer6.height + 20);
+			}
+		}else if(characterSpeaking == 22){
+			stopAllMovement = false;
+		}
+
+		if(canPlayerInteract(prisonerwanderer1.position.x -5, prisonerwanderer1.position.y - 5, prisonerwanderer1.height + 10, prisonerwanderer1.width + 10)){
+			ranked_hovered_over_object = 23;
+		}
+
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 23){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericPrisoner[randomTextInt], prisonerwanderer1.position.x + 5, prisonerwanderer1.position.y + prisonerwanderer1.height + 20);
+			}else{
+				ctx.fillText(nicePrisoner[randomTextInt], prisonerwanderer1.position.x + 5, prisonerwanderer1.position.y + prisonerwanderer1.height + 20);
+			}
+		}else if(characterSpeaking == 23){
+			stopAllMovement = false;
+		}
 
 		//door to day room
 		if(canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
@@ -902,16 +1367,73 @@ function gameLoop(timestamp){
 		//door to cells
 		if(canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, 10, arrow_height, arrow_width)){
 			ranked_hovered_over_object = 4;
-			ctx.drawImage(upArrowImg, GAME_WIDTH/2 - arrow_height/2, arrow_height + 5, arrow_height, arrow_width);
+			ctx.drawImage(upArrowImg, GAME_WIDTH/2 - arrow_height/2, door_height + 10, arrow_height, arrow_width);
 		}
 
-		if(!canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(GAME_WIDTH/2 - arrow_height/2, arrow_height + 5, arrow_height, arrow_width)){
+		//door to cafeteria
+		if(canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+			ranked_hovered_over_object = 7;
+			ctx.drawImage(leftArrowImg, door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
+		}
+
+		//door to exit hallway
+		if(canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height)){
+			ranked_hovered_over_object = 13;
+			ctx.drawImage(downArrowImg, GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height);
+		}
+
+		if(!canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(GAME_WIDTH/2 - arrow_height/2, arrow_height + 5, arrow_height, arrow_width) && !canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(prisonerwanderer7.position.x, prisonerwanderer7.position.y, prisonerwanderer7.height, prisonerwanderer7.width) && !canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height) && !canPlayerInteract(guardwanderer1.position.x -5, guardwanderer1.position.y - 5, guardwanderer1.height + 10, guardwanderer1.width + 10) && !canPlayerInteract(prisonerwanderer6.position.x -5, prisonerwanderer6.position.y - 5, prisonerwanderer6.height + 10, prisonerwanderer6.width + 10) && !canPlayerInteract(prisonerwanderer7.position.x -5, prisonerwanderer7.position.y - 5, prisonerwanderer7.height + 10, prisonerwanderer7.width + 10) && !canPlayerInteract(prisonerwanderer1.position.x -5, prisonerwanderer1.position.y - 5, prisonerwanderer1.height + 10, prisonerwanderer1.width + 10) && !canPlayerInteract(GAME_WIDTH/2 - 100,GAME_HEIGHT/2 - 100, 48,48)){
 			ranked_hovered_over_object = 0;
 		}
+
 	}else if (currentRoom == "Cells"){
-		guardwanderer2.performMovement();
-		guardwanderer2.update(deltaTime);
-		guardwanderer2.draw(ctx);
+
+		if (player.position.y < GAME_HEIGHT/3){
+			player.position.y = GAME_HEIGHT/3;
+		}
+
+		prisonerwanderer2.performMovement();
+		prisonerwanderer2.update(deltaTime);
+		prisonerwanderer2.draw(ctx);
+
+		prisonerwanderer5.performMovement();
+		prisonerwanderer5.update(deltaTime);
+		prisonerwanderer5.draw(ctx);
+
+		ctx.fillStyle = "#c0c0c0";
+		ctx.fillRect(0, GAME_HEIGHT/3 -5, GAME_WIDTH, 5);
+
+		if (!distracted){
+			guardwanderer2.performMovement();
+			guardwanderer2.update(deltaTime);
+			guardwanderer2.draw(ctx);
+		}
+
+		if (!distracted){
+			if(canPlayerInteract(guardwanderer2.position.x -5, guardwanderer2.position.y - 5, guardwanderer2.height + 10, guardwanderer2.width + 10)){
+				ranked_hovered_over_object = 24;
+			}
+		}
+
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 24){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericGuard[randomTextInt], guardwanderer2.position.x + 5, guardwanderer2.position.y + guardwanderer2.height + 20);
+			}else{
+				ctx.fillText("Hey man, I got you that thing you wanted.", guardwanderer2.position.x + 5, guardwanderer2.position.y + guardwanderer2.height + 20);
+				escapeKeyFound = true;
+			}
+		}else if(characterSpeaking == 24){
+			stopAllMovement = false;
+			if (player.characterCode == 3){
+				timeOfTextStart = lastTime;
+				characterSpeaking = 0;
+				speakingReason = "key";
+				stopAllMovement = true;
+			}
+		}
 
 		//door to courtyard
 		if(canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height)){
@@ -925,34 +1447,421 @@ function gameLoop(timestamp){
 			ctx.drawImage(rightArrowImg, GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
 		}
 
-		if (!canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height) && !canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+		if (!canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height) && !canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(guardwanderer2.position.x -5, guardwanderer2.position.y - 5, guardwanderer2.height + 10, guardwanderer2.width + 10)){
 			ranked_hovered_over_object = 0;
 		}
 
 	}else if (currentRoom == "Day Room"){
 
+		if(distracted){
+			guardwanderer4.performMovement();
+			guardwanderer4.update(deltaTime);
+			guardwanderer4.draw(ctx);
+
+			guardwanderer3.performMovement();
+			guardwanderer3.update(deltaTime);
+			guardwanderer3.draw(ctx);
+
+			guardwanderer10.performMovement();
+			guardwanderer10.update(deltaTime);
+			guardwanderer10.draw(ctx);
+
+			prisonerwanderer11.performMovement();
+			prisonerwanderer11.update(deltaTime);
+			prisonerwanderer11.draw(ctx);
+		}
+
+		guardwanderer9.performMovement();
+		guardwanderer9.update(deltaTime);
+		guardwanderer9.draw(ctx);
+
+		prisonerwanderer8.performMovement();
+		prisonerwanderer8.update(deltaTime);
+		prisonerwanderer8.draw(ctx);
+
+		prisonerwanderer10.performMovement();
+		prisonerwanderer10.update(deltaTime);
+		prisonerwanderer10.draw(ctx);
+
+		prisonerwanderer4.performMovement();
+		prisonerwanderer4.update(deltaTime);
+		prisonerwanderer4.draw(ctx);
+
+		if(!trophy2found){
+			ctx.drawImage(trophyImg, trophy2Data.x, trophy2Data.y, trophy2Data.width, trophy2Data.height);
+		}
+
+		//get trophy
+		if (canPlayerInteract(trophy2Data.x, trophy2Data.y, trophy2Data.width, trophy2Data.height)){
+			ranked_hovered_over_object = 35;
+		}
+
+		//talk to tony
+		if (canPlayerInteract(prisonerwanderer4.position.x -5,prisonerwanderer4.position.y -5, prisonerwanderer4.width + 10, prisonerwanderer3.height + 10)){
+			ranked_hovered_over_object = 15;
+		}
+
+		if (canPlayerInteract(prisonerwanderer8.position.x -5,prisonerwanderer8.position.y -5, prisonerwanderer8.width + 10, prisonerwanderer8.height + 10)){
+			ranked_hovered_over_object = 31;
+		}
+
+		if (canPlayerInteract(prisonerwanderer10.position.x -5,prisonerwanderer10.position.y -5, prisonerwanderer10.width + 10, prisonerwanderer10.height + 10)){
+			ranked_hovered_over_object = 32;
+		}
+
+		//talk to prisoner
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 32){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericPrisoner[randomTextInt], prisonerwanderer10.position.x + 5, prisonerwanderer10.position.y + prisonerwanderer10.height + 20);
+			}else{
+				ctx.fillText(nicePrisoner[randomTextInt], prisonerwanderer10.position.x + 5, prisonerwanderer10.position.y + prisonerwanderer10.height + 20);
+			}
+		}else if(characterSpeaking == 32){
+			stopAllMovement = false;
+		}
+
+		//talk to prisoner
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 31){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericPrisoner[randomTextInt], prisonerwanderer8.position.x + 5, prisonerwanderer8.position.y + prisonerwanderer8.height + 20);
+			}else{
+				ctx.fillText(nicePrisoner[randomTextInt], prisonerwanderer8.position.x + 5, prisonerwanderer8.position.y + prisonerwanderer8.height + 20);
+			}
+		}else if(characterSpeaking == 31){
+			stopAllMovement = false;
+		}
+
+		//can talk to guard
+		if(canPlayerInteract(guardwanderer9.position.x -5, guardwanderer9.position.y - 5, guardwanderer9.width + 10, guardwanderer9.height + 10)){
+			ranked_hovered_over_object = 30;
+		}
+		
+
+		//talk to guard (get key if thief)
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 30){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			ctx.fillText(". . .", guardwanderer9.position.x + 5, guardwanderer9.position.y + guardwanderer9.height + 20);
+		}else if(characterSpeaking == 30){
+			stopAllMovement = false;
+			if (player.characterCode == 1){
+				timeOfTextStart = lastTime;
+				characterSpeaking = 0;
+				speakingReason = "stole";
+				stopAllMovement = true;
+				escapeKeyFound = true;
+			}else{
+				timeOfTextStart = lastTime;
+				characterSpeaking = 0;
+				speakingReason = "character";
+				stopAllMovement = true;
+			}
+		}
+
+		if (timestamp < timeOfTextStart + 800 && characterSpeaking == 15){
+			ctx.font = "15px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (!spokenToJim){
+				ctx.fillText("...", prisonerwanderer4.position.x + prisonerwanderer4.width/2, prisonerwanderer4.position.y + prisonerwanderer4.height + 20);
+			} else if (distracted && spokenToJim){
+				ctx.font = "12px Arial";
+				ctx.fillText("Let's tear this place apart, man!", prisonerwanderer4.position.x, prisonerwanderer4.position.y + prisonerwanderer4.height + 20);
+			}else{
+				ctx.font = "12px Arial";
+				ctx.fillText("Jim sent you? We need Ralph in", prisonerwanderer4.position.x, prisonerwanderer4.position.y + prisonerwanderer4.height + 20);
+				ctx.fillText("the Cafeteria. Talk to him.", prisonerwanderer4.position.x, prisonerwanderer4.position.y + prisonerwanderer4.height + 30);
+			}
+		}else if(characterSpeaking == 15){
+			stopAllMovement = false;
+			spokenToTony = true;
+		}
+
+		//door to courtyard
 		if(canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
 			ranked_hovered_over_object = 3;
 			ctx.drawImage(leftArrowImg, door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
 		}
 
-		if(!canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+		if(!canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(prisonerwanderer4.position.x -5,prisonerwanderer4.position.y -5, prisonerwanderer4.width + 10, prisonerwanderer3.height + 10) && !canPlayerInteract(guardwanderer9.position.x -5, guardwanderer9.position.y - 5, guardwanderer9.height + 10, guardwanderer9.width + 10) && !canPlayerInteract(prisonerwanderer8.position.x -5,prisonerwanderer8.position.y -5, prisonerwanderer8.width + 10, prisonerwanderer8.height + 10) && !canPlayerInteract(prisonerwanderer10.position.x -5,prisonerwanderer10.position.y -5, prisonerwanderer10.width + 10, prisonerwanderer10.height + 10) && !canPlayerInteract(trophy2Data.x, trophy2Data.y, trophy2Data.width, trophy2Data.height)){
 			ranked_hovered_over_object = 0;
 		}
 
 	}else if (currentRoom == "Showers"){
+
+		ctx.drawImage(toiletImg, GAME_WIDTH/6 - 35,40, 35,40);
+
+		ctx.drawImage(toiletImg, 2 * (GAME_WIDTH/6) - 35,40, 35,40);
+
+		ctx.drawImage(toiletImg, 3 * (GAME_WIDTH/6) - 35,40, 35,40);
+
+		ctx.drawImage(toiletImg, 3 * (GAME_WIDTH/6) - 35,GAME_HEIGHT - 90, 35,40);
+
+		ctx.drawImage(toiletImg, 4 * (GAME_WIDTH/6) - 35,GAME_HEIGHT - 90, 35,40);
+
+		//draw key
+		if(!storageRoomKeyFound){
+			ctx.drawImage(keyImg, storageKeyData.x, storageKeyData.y, storageKeyData.width, storageKeyData.height);
+		}
+
+		if (canPlayerInteract(storageKeyData.x, storageKeyData.y, storageKeyData.width, storageKeyData.height)){
+			ranked_hovered_over_object = 11;
+		}
+
+		//get key
+		if(canPlayerInteract(3 * (GAME_WIDTH/6) - 35,40, 35,40)){
+			ranked_hovered_over_object = 28;
+		}
 		
+		//door to cells
 		if(canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
 			ranked_hovered_over_object = 6;
 			ctx.drawImage(leftArrowImg, door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
 		}
 
-		if(!canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+		if(!canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(storageKeyData.x, storageKeyData.y, storageKeyData.width, storageKeyData.height) && !canPlayerInteract(3 * (GAME_WIDTH/6) - 35,40, 35,40)){
+			ranked_hovered_over_object = 0;
+		}
+	}else if (currentRoom == "Cafeteria"){
+
+		if (!distracted){
+			guardwanderer5.performMovement();
+			guardwanderer5.update(deltaTime);
+			guardwanderer5.draw(ctx);
+
+			guardwanderer7.performMovement();
+			guardwanderer7.update(deltaTime);
+			guardwanderer7.draw(ctx);
+		}
+
+		prisonerwanderer3.performMovement();
+		prisonerwanderer3.update(deltaTime);
+		prisonerwanderer3.draw(ctx);
+
+		prisonerwanderer12.performMovement();
+		prisonerwanderer12.update(deltaTime);
+		prisonerwanderer12.draw(ctx);
+
+		//door to courtyard
+		if(canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+			ranked_hovered_over_object = 8;
+			ctx.drawImage(rightArrowImg, GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
+		}
+
+
+		//door to storage
+		if(canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height)){
+			ranked_hovered_over_object = 10;
+			ctx.drawImage(downArrowImg, GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height);
+		}
+
+		//talk to Ralph
+		if (canPlayerInteract(prisonerwanderer3.position.x -5,prisonerwanderer3.position.y -5, prisonerwanderer3.width + 10, prisonerwanderer3.height + 10)){
+			ranked_hovered_over_object = 14;
+		}
+
+		//talk to prisoner
+		if (canPlayerInteract(prisonerwanderer12.position.x -5,prisonerwanderer12.position.y -5, prisonerwanderer12.width + 10, prisonerwanderer12.height + 10)){
+			ranked_hovered_over_object = 33;
+		}
+
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 33){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericPrisoner[randomTextInt], prisonerwanderer12.position.x + 5, prisonerwanderer12.position.y + prisonerwanderer12.height + 20);
+			}else{
+				ctx.fillText(nicePrisoner[randomTextInt], prisonerwanderer12.position.x + 5, prisonerwanderer12.position.y + prisonerwanderer12.height + 20);
+			}
+		}else if(characterSpeaking == 33){
+			stopAllMovement = false;
+		}
+
+		//talk to guard
+		if (canPlayerInteract(guardwanderer7.position.x -5,guardwanderer7.position.y -5, guardwanderer7.width + 10, guardwanderer7.height + 10)){
+			ranked_hovered_over_object = 25;
+		}
+
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 25){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericGuard[randomTextInt], guardwanderer7.position.x + 5, guardwanderer7.position.y + guardwanderer7.height + 20);
+			}else{
+				ctx.fillText(niceGuard[randomTextInt], guardwanderer7.position.x + 5, guardwanderer7.position.y + guardwanderer7.height + 20);
+			}
+		}else if(characterSpeaking == 25){
+			stopAllMovement = false;
+		}
+
+		//talk to second guard
+		if (canPlayerInteract(guardwanderer5.position.x -5,guardwanderer5.position.y -5, guardwanderer5.width + 10, guardwanderer5.height + 10)){
+			ranked_hovered_over_object = 26;
+		}
+
+		if (timestamp < timeOfTextStart + 700 && characterSpeaking == 26){
+			ctx.font = "12px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (player.characterCode != 3){
+				ctx.fillText(genericGuard[randomTextInt], guardwanderer5.position.x + 5, guardwanderer5.position.y + guardwanderer5.height + 20);
+			}else{
+				ctx.fillText(niceGuard[randomTextInt], guardwanderer5.position.x + 5, guardwanderer5.position.y + guardwanderer5.height + 20);
+			}
+		}else if(characterSpeaking == 26){
+			stopAllMovement = false;
+		}
+
+		if (timestamp < timeOfTextStart + 800 && characterSpeaking == 14){
+			ctx.font = "15px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			if (!spokenToTony){
+				ctx.fillText("...", prisonerwanderer3.position.x + prisonerwanderer3.width/2, prisonerwanderer3.position.y + prisonerwanderer3.height + 20);
+			}else{
+				ctx.font = "12px Arial";
+				ctx.fillText("About time! Let's destroy this place.", prisonerwanderer3.position.x, prisonerwanderer3.position.y + prisonerwanderer3.height + 20);
+			}
+		}else if(characterSpeaking == 14){
+			stopAllMovement = false;
+			if (spokenToTony){
+				distracted = true;
+			}
+		}
+
+		if(!canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height) && !canPlayerInteract(prisonerwanderer3.position.x -5,prisonerwanderer3.position.y -5, prisonerwanderer3.width + 10, prisonerwanderer3.height + 10) && !canPlayerInteract(guardwanderer7.position.x -5,guardwanderer7.position.y -5, guardwanderer7.width + 10, guardwanderer7.height + 10) && !canPlayerInteract(guardwanderer5.position.x -5,guardwanderer5.position.y -5, guardwanderer5.width + 10, guardwanderer5.height + 10) && !canPlayerInteract(prisonerwanderer12.position.x -5,prisonerwanderer12.position.y -5, prisonerwanderer12.width + 10, prisonerwanderer12.height + 10)){
+			ranked_hovered_over_object = 0;
+		}
+
+	}else if(currentRoom == "Storage Room"){
+
+		if(!trophy1found){
+			ctx.drawImage(trophyImg, trophy1Data.x, trophy1Data.y, trophy1Data.width, trophy1Data.height);
+		}
+		
+		//draw key
+		if(!escapeKeyFound){
+			ctx.drawImage(keyImg, escape1KeyData.x, escape1KeyData.y, escape1KeyData.width, escape1KeyData.height);
+		}
+
+		//interact with escapekey1
+		if(canPlayerInteract(escape1KeyData.x, escape1KeyData.y, escape1KeyData.width, escape1KeyData.height)){
+			ranked_hovered_over_object = 17;
+		}
+
+		//interact with first trophy
+		if(canPlayerInteract(trophy1Data.x, trophy1Data.y, trophy1Data.width, trophy1Data.height)){
+			ranked_hovered_over_object = 34;
+		}
+
+		//door to cafeteria
+		if(canPlayerInteract(GAME_WIDTH/2 - arrow_height/2, door_height + 10, arrow_height, arrow_width)){
+			ranked_hovered_over_object = 16;
+			ctx.drawImage(upArrowImg, GAME_WIDTH/2 - arrow_height/2, door_height + 10, arrow_height, arrow_width);
+		}
+
+		if(!canPlayerInteract(GAME_WIDTH/2 - arrow_height/2, door_height + 10, arrow_height, arrow_width) && !canPlayerInteract(escape1KeyData.x, escape1KeyData.y, escape1KeyData.width, escape1KeyData.height) && !canPlayerInteract(trophy1Data.x, trophy1Data.y, trophy1Data.width, trophy1Data.height)){
+			ranked_hovered_over_object = 0;
+		}
+	}else if(currentRoom == "Exit Hallway"){
+
+		//door to courtyard
+		if(canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, 10, arrow_height, arrow_width)){
+			ranked_hovered_over_object = 12;
+			ctx.drawImage(upArrowImg, GAME_WIDTH/2 - arrow_height/2, door_height + 10, arrow_height, arrow_width);
+		}
+
+		//door to warden's office
+		if(canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+			ranked_hovered_over_object = 18;
+			ctx.drawImage(rightArrowImg, GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
+		}
+
+		//escape dooor
+		if(canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height)){
+			ranked_hovered_over_object = 20;
+			ctx.drawImage(downArrowImg, GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height);
+		}
+
+		if(!canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, 10, arrow_height, arrow_width) && !canPlayerInteract(GAME_WIDTH - door_height - arrow_width - 10, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(GAME_WIDTH/2 - arrow_width/2, GAME_HEIGHT - door_height - arrow_height -10, arrow_width, arrow_height)){
+			ranked_hovered_over_object = 0;
+		}
+
+	}else if(currentRoom == "Warden's Office"){
+
+		guardwanderer8.performMovement();
+		guardwanderer8.update(deltaTime);
+		guardwanderer8.draw(ctx);
+
+		if(!trophy3found){
+			ctx.drawImage(trophyImg, trophy3Data.x, trophy3Data.y, trophy3Data.width, trophy3Data.height);
+		}
+
+		if(canPlayerInteract(trophy3Data.x, trophy3Data.y, trophy3Data.width, trophy3Data.height)){
+			ranked_hovered_over_object = 36;
+		}
+
+		if(canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width)){
+			ranked_hovered_over_object = 19;
+			ctx.drawImage(leftArrowImg, door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width);
+		}
+
+
+		if(canPlayerInteract(guardwanderer8.position.x -5, guardwanderer8.position.y - 5, guardwanderer8.height + 10, guardwanderer8.width + 10)){
+			ranked_hovered_over_object = 27;
+		}
+
+		if (timestamp < timeOfTextStart + 800 && characterSpeaking == 27){
+			ctx.font = "15px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillStyle = "#000";
+			ctx.fillText("z z z", guardwanderer8.position.x + guardwanderer8.width/2, guardwanderer8.position.y + guardwanderer8.height + 20);
+		}else if(characterSpeaking == 27){
+			stopAllMovement = false;
+			if (spokenToTony){
+				distracted = true;
+			}
+		}
+
+
+		if(!canPlayerInteract(door_height + 5, GAME_HEIGHT/2 - arrow_width/2, arrow_height, arrow_width) && !canPlayerInteract(guardwanderer8.position.x -5, guardwanderer8.position.y - 5, guardwanderer8.height + 10, guardwanderer8.width + 10) && !canPlayerInteract(trophy3Data.x, trophy3Data.y, trophy3Data.width, trophy3Data.height)){
 			ranked_hovered_over_object = 0;
 		}
 	}
 
-	requestAnimationFrame(gameLoop);
+	player.update(deltaTime);
+	player.draw(ctx);
+
+	if(rankedGameFinished){
+		if (timestamp - timeOfGameStart > 80000){
+			gameScore = 500000 - 80000;
+		}else{
+			let time = Math.floor(timestamp - timeOfGameStart);
+			gameScore = 500000 - time;
+		}
+		if (trophy1found){
+			gameScore = gameScore + 20000;
+		}
+		if (trophy2found){
+			gameScore = gameScore + 20000;
+		}
+		if (trophy3found){
+			gameScore = gameScore + 100000;
+		}
+		timeOfGameEnd = timestamp;
+		finishedLoop();
+	}else{
+		requestAnimationFrame(gameLoop);
+	}
 }
 
 function demoLoop(timestamp){
@@ -1160,6 +2069,48 @@ function demoLoop(timestamp){
 		player.characterCode = 0;
 		modeSelectionLoop();
 	}
+}
+
+function finishedLoop(timestamp){
+	let deltaTime =  timestamp - lastTime;
+	lastTime = timestamp;
+
+	ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+
+	ctx.font = "21px Arial";
+	ctx.textAlign = 'center';
+	ctx.fillStyle = "#000";
+	ctx.fillText("Congradulations!", GAME_WIDTH/2, GAME_HEIGHT/2 - 10);
+	ctx.font = "12px Arial";
+	ctx.fillText("Score: " + gameScore, GAME_WIDTH/2, GAME_HEIGHT/2 + 10);
+
+	player.update(deltaTime);
+	player.draw(ctx);
+
+	if(timestamp == null){
+		requestAnimationFrame(finishedLoop);
+	}else{
+		if (timestamp < timeOfGameEnd + 10000){
+			requestAnimationFrame(finishedLoop);
+		}else{
+			mode = null;
+			modeSelected = false;
+			player.characterCode = 0;
+			rankedGameFinished = false;
+			spokenToJim = false;
+			spokenToTony = false;
+			storageRoomKeyFound = false;
+			escapeKeyFound = false;
+			distracted = false;
+			wardenKeyFound = false;
+			trophy1found = false;
+			trophy2found = false;
+			trophy3found = false;
+			modeSelectionLoop();
+		}
+	}
+
+	
 }
 
 modeSelectionLoop();
