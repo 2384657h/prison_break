@@ -29,8 +29,8 @@ Leaderboard
             <td>{{ forloop.counter }}</td>  
             <td>{{ score.name }}</td>
             <td>{{ score.lscore }}</td>
-            {% if score.userp.picture %}
-            <td><img src="{{ score.userp.picture.url }}" width="50" height="50"></td>
+            {% if score.userp.userprofile.picture %}
+            <td><img src="{{ score.userp.userprofile.picture.url }}" width="50" height="50"></td>
             {% endif %}
         </tr> 
             {% endfor %}
