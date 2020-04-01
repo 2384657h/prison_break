@@ -168,14 +168,14 @@ def leaderboard(request):
 
         
         score = theuser.userprofile.score
+        if score != 0:
+            score_list[name] = score
 
-        score_list[name] = score
-
-    sortedscores = {k: v for k, v in sorted(score_list.items(), key=lambda x: x[1], reverse = True)}
-
-    x = itertools.islice(sortedscores.items(), 0, 9)
     
-    for key, value in x:
+
+    
+    
+    for key, value in score_list.items():
         leaderboard = Leaderboard()
        
         leaderboard.userp = User.objects.get(username=key)
@@ -185,11 +185,12 @@ def leaderboard(request):
             Leaderboard.objects.filter(name=leaderboard.name).update(lscore=leaderboard.lscore)
         else:
             leaderboard.save()
+    
 
 
 
     
-    leaderboards = Leaderboard.objects.all()
+    leaderboards = Leaderboard.objects.all().order_by('lscore')[:10]
     context_dict = {}
 
     context_dict['Leaderboard'] = leaderboards
