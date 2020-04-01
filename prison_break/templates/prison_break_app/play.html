@@ -9,7 +9,7 @@ Game Screen
 
 {% block body_block %}
 
-	<button type="button" id="save_btn">Save Game?</button>
+	<div id="save"><button type="button" class = "btn btn-success btn-large" id="save_btn">Save Game?</button></div>	
     <canvas id="gameScreen" width="600" height="600"></canvas>
 	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
 	<input value="{% url 'prison_break_app:character_select' %}" hidden ="hidden" id="charSelectURL" />
