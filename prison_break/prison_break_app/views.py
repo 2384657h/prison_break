@@ -35,6 +35,8 @@ def signup(request):
 def login(request):
     return render(request, 'prison_break_app/login.html')
 
+
+#csrf exempt as no sensitive user data is being passed in POST request
 @csrf_exempt
 def update_counter(request):
     if request.method == 'POST':
@@ -42,6 +44,7 @@ def update_counter(request):
         coordX = request.POST['posX']
         coordY = request.POST['posY']
         this_user = request.user
+        #increment user score
         this_user.userprofile.score = this_user.userprofile.score + int(score_count)
         this_user.save()
         this_user.userprofile.save()
@@ -54,12 +57,15 @@ def update_counter(request):
 
     return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.character.char_ID) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
 
+#csrf exempt as no sensitive user data is being passed in POST request
 @csrf_exempt
 def character_select(request):
     if request.method == 'POST':
         character_code = request.POST['character']
         coordX = request.POST['posX']
         coordY = request.POST['posY']
+        #make new character for current user
+        #fill with data
         character = Character()
         current_user = request.user
         character.user = current_user
