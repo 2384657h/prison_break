@@ -113,6 +113,8 @@ def updatePhoto(request):
 @csrf_exempt
 def updateUsername(request):
     user = request.user
+    if Leaderboard.objects.filter(userp=user).exists():
+        leaderboardob = Leaderboard.objects.get(userp=user).delete()
     user.username=request.POST.get('username')
     user.save()
     return render(request, 'prison_break_app/profile.html')
@@ -156,7 +158,7 @@ def leaderboard(request):
 
     for theuser in users:
         name = theuser.username
-        UserProfile.objects.get_or_create(user=theuser)
+        UserProfile.objects.get(user=theuser)
 
         
         score = theuser.userprofile.score
@@ -170,7 +172,7 @@ def leaderboard(request):
     for key, value in x:
         leaderboard = Leaderboard()
        
-        leaderboard.userp = UserProfile.objects.get(user=User.objects.get(username=key))
+        leaderboard.userp = User.objects.get(username=key)
         leaderboard.name = key
         leaderboard.lscore = value
         if Leaderboard.objects.filter(name=leaderboard.name).exists():
