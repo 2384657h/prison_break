@@ -158,7 +158,7 @@ def leaderboard(request):
 
     for theuser in users:
         name = theuser.username
-        UserProfile.objects.get(user=theuser)
+        UserProfile.objects.get_or_create(user=theuser)
 
         
         score = theuser.userprofile.score
