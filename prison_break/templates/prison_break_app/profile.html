@@ -89,7 +89,7 @@
         <div class="md-form mb-5">
             <form class="form-updateEmail" method="POST" enctype="multipart/form-data" action="{% url 'prison_break_app:updateEmail' %}">
                 {% csrf_token %}
-                <input type="email" id=inputEmail name="email" class="form-control" placeholder="email">
+                <input type="email" id=inputEmail name="email" class="form-control" placeholder="email" required>
         </div>
       </div>
 
