@@ -1,0 +1,23 @@
+{% extends 'prison_break_app/base.html'%}
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% block title_block %}
+Page not found
+{% endblock %}
+
+{% block body_block %}
+<div class="header">
+    <h1>Uh Oh...</h1>
+    <p>This page doesnt exist.</p>
+</div>
+<style>
+.header {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
+</style>
+{% endblock %}
