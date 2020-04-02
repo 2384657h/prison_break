@@ -190,7 +190,7 @@ def leaderboard(request):
 
 
     
-    leaderboards = Leaderboard.objects.all().order_by('lscore')[:10]
+    leaderboards = Leaderboard.objects.all().order_by('-lscore')[:10]
     context_dict = {}
 
     context_dict['Leaderboard'] = leaderboards
