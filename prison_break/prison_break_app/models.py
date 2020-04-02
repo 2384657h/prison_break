@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+"""
+used to store all the data for user such as scores and profile picture, linked to user by username
+
+"""
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	score = models.IntegerField(default=0)
@@ -17,6 +21,10 @@ class UserProfile(models.Model):
 	def __str__(self):
 		return self.user.username
 
+
+"""
+Stores all the data for a save state of the game, allows game reloading
+"""
 class Character(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
 
@@ -38,6 +46,10 @@ class Character(models.Model):
 	trophy3 = models.IntegerField(default =0)
 	distracted = models.IntegerField(default =0)
 
+"""
+each instance is a object to show in leaderboard, each object is one row with the user
+and score, the photo is got from the user
+"""
 class Leaderboard(models.Model):
 	userp = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
 	name = models.CharField(max_length=100)

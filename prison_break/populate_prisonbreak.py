@@ -27,7 +27,7 @@ def populate():
 		'email':'geoff@gmail.com',
 		'score':100}]
 
-
+	#add each new user to database
 	for user in users:
 		add_user(user['username'],user['password'],user['email'],user['score'])
 
@@ -36,7 +36,9 @@ def populate():
 		print(user['username'] + " added.")
 
 
-
+"""
+code to register a user with the database
+"""
 def add_user(username, password,email,score):
 	user = User.objects.create_user(username=username, password =password, email=email)
 	user.save()

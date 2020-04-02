@@ -3,7 +3,9 @@ from prison_break_app import views
 from prison_break_app.views import update_counter
 
 app_name = 'prison_break_app'
-
+"""
+simply the url address and the page to redirect it to, also a name for it so we could use the : operator instead of full paths
+"""
 urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
