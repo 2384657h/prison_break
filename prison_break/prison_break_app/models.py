@@ -26,7 +26,7 @@ class Character(models.Model):
 	#record time user has played game on this character
 	gametime = models.IntegerField(default=0)
 
-	current_room = models.CharField(max_length=30,unique=False)
+	current_room = models.CharField(max_length=30,unique=False, default=None)
 	spokeJ = models.IntegerField(default =0)
 	spokeT = models.IntegerField(default =0)
 	storeroomKey = models.IntegerField(default =0)
