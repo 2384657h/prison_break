@@ -46,38 +46,50 @@ def login(request):
 @csrf_exempt
 def update_counter(request):
     if request.method == 'POST':
-        score_count = request.POST['counter']
+        time_count = request.POST['counter']
         coordX = request.POST['posX']
         coordY = request.POST['posY']
         this_user = request.user
+
+
         #increment user score
-        this_user.userprofile.score = this_user.userprofile.score + int(score_count)
         this_user.save()
-        this_user.userprofile.save()
+        message = 'update successful'
 
         if this_user.userprofile.newGame == 0:
             #save character data
+            #increment current time
+            this_user.character.gametime = this_user.character.gametime + int(float(time_count))
             this_user.character.posx = coordX
-            this_user.character.posx = coordY
-        message = 'update successful'
+            this_user.character.posy = coordY
+            this_user.character.current_room = request.POST['current_room']
+            this_user.character.trophy1 = request.POST['trophy1']
+            this_user.character.trophy2 = request.POST['trophy2']
+            this_user.character.trophy3 = request.POST['trophy3']
+            this_user.character.escapeKey = request.POST['escapeKey']
+            this_user.character.wardenKey = request.POST['wardenKey']
+            this_user.character.storeroomKey = request.POST['storageKey']
+            this_user.character.spokeT = request.POST['spokeT']
+            this_user.character.spokeJ = request.POST['spokeJ']
+            this_user.character.distracted = request.POST['distracted']
+            this_user.character.save()
 
-    return HttpResponse(this_user.username + "score =" + str(this_user.userprofile.score) + " " + str(this_user.character.char_ID) + " with coords: " + str(this_user.character.posx) + "," + str(this_user.character.posy))
+            message = message + " " + this_user.character.current_room + str(this_user.character.wardenKey) + str(this_user.character.distracted) + str(this_user.userprofile.newGame)
+        
+
+    return HttpResponse(message)
 
 #csrf exempt as no sensitive user data is being passed in POST request
 @csrf_exempt
 def character_select(request):
     if request.method == 'POST':
         character_code = request.POST['character']
-        coordX = request.POST['posX']
-        coordY = request.POST['posY']
         #make new character for current user
         #fill with data
         character = Character()
         current_user = request.user
         character.user = current_user
         character.char_ID = character_code
-        character.posx = coordX
-        character.posy = coordY
         #set newgame two zero, i.e. NOT a new game
         current_user.userprofile.newGame = 0
         current_user.save()
@@ -86,8 +98,39 @@ def character_select(request):
 
         message = 'character selected'
 
-    return HttpResponse(message + " with coords: " + str(character.posx) + "," + str(character.posy))
+    return HttpResponse(message)
 
+
+@csrf_exempt
+def end_game(request):
+    if request.method == 'POST':
+        this_user = request.user
+        finalscore = request.POST['finalscore']
+        if this_user.userprofile.prevscore <= int(finalscore):
+            this_user.userprofile.prevscore = int(finalscore)
+
+        this_user.userprofile.score = 0
+        this_user.userprofile.newGame = 1
+
+        #RESET ALL CHARACTER DATA
+        this_user.character.char_ID = 0
+        this_user.character.trophy1 = 0
+        this_user.character.trophy2 = 0
+        this_user.character.trophy3 = 0
+        this_user.character.escapeKey = 0
+        this_user.character.wardenKey = 0
+        this_user.character.storeroomKey = 0
+        this_user.character.spokeT = 0
+        this_user.character.spokeJ = 0
+        this_user.character.distracted = 0
+        this_user.character.current_room = ""
+        this_user.save()
+        this_user.userprofile.save()
+        this_user.character.save()
+
+        message = 'game finished'
+
+    return HttpResponse(message + " with score: " + str(this_user.userprofile.prevscore))
 
 
 def register(request, backend='django.contrib.auth.backends.ModelBackend'):
@@ -99,6 +142,8 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
         profile = UserProfile()
         profile.user = user
         #set to currently new game
+        profile.prevscore = 0
+        profile.score = 0
         profile.newGame = 1
         
         if 'profilepic' in request.FILES:
@@ -176,7 +221,7 @@ def leaderboard(request):
         UserProfile.objects.get_or_create(user=theuser)
 
         
-        score = theuser.userprofile.score
+        score = theuser.userprofile.prevscore
         if score != 0:
             score_list[name] = score
 

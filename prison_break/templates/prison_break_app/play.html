@@ -13,8 +13,22 @@ Game Screen
     <canvas id="gameScreen" width="600" height="600"></canvas>
 	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
 	<input value="{% url 'prison_break_app:character_select' %}" hidden ="hidden" id="charSelectURL" />
+	<input value="{% url 'prison_break_app:end_game' %}" hidden ="hidden" id="endgameURL" />
 	<input value="{{ user.userprofile.newGame }}" hidden ="hidden" id="newgamecheck" />
 	<input value="{{ user.character.char_ID }}" hidden ="hidden" id="charCode" />
+	<input value="{{ user.character.gametime }}" hidden ="hidden" id="inputTime" />
+	<input value="{{ user.character.trophy1 }}" hidden ="hidden" id="trophy1" />
+	<input value="{{ user.character.trophy2 }}" hidden ="hidden" id="trophy2" />
+	<input value="{{ user.character.trophy3 }}" hidden ="hidden" id="trophy3" />
+	<input value="{{ user.character.posx }}" hidden ="hidden" id="posX" />
+	<input value="{{ user.character.posy }}" hidden ="hidden" id="posY" />
+	<input value="{{ user.character.spokeT }}" hidden ="hidden" id="spokeT" />
+	<input value="{{ user.character.spokeJ }}" hidden ="hidden" id="spokeJ" />
+	<input value="{{ user.character.escapeKey }}" hidden ="hidden" id="escapeKey" />
+	<input value="{{ user.character.wardenKey }}" hidden ="hidden" id="wardenKey" />
+	<input value="{{ user.character.storeroomKey }}" hidden ="hidden" id="storeroomKey" />
+	<input value="{{ user.character.distracted }}" hidden ="hidden" id="distracted" />
+	<input value="{{ user.character.current_room }}" hidden ="hidden" id="currentRoom" />
     <script src="{% static "js/play.js" %}"></script>
 {% endblock %}
 

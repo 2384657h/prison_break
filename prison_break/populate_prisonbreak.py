@@ -44,7 +44,7 @@ def add_user(username, password,email,score):
 	character = Character()
 	profile.user = user
 	character.user = user
-	profile.score = score
+	profile.prevscore = score
 	
 	profile.save()
 	character.save()
