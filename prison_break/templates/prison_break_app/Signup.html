@@ -28,6 +28,7 @@ Sign up
         },
         dataType: 'json',
         success: function (data) {
+          $('#inputUsername')[0].setCustomValidity('');
           if (data.is_taken) {
             $('#inputUsername')[0].setCustomValidity('Username already taken');
 
@@ -86,6 +87,12 @@ Sign up
                 <input type="file" id=fileUpload name="profilepic" class="form-control" placeholder="Profile Picture" accept="image/*">
                 <label for="fileUpload">Profile Picture (Square image reccomended)</label>
               </div>
+              <div class="form-label-group">
+                <input type="checkbox" id=toscheckbox name="tos" class="form-control"  required>
+                <label for="toscheckbox" id="toslabel">You agree to our <a href="{% url 'prison_break_app:terms' %}" >terms of service </a> and <a href="{% url 'prison_break_app:privacy' %}" >privacy policy</a></label>
+              </div>
+
+              
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" id="thesubmit" type="submit">Register</button>
               <hr class="my-4">

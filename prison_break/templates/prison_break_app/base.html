@@ -66,6 +66,12 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'prison_break_app:leaderboard' %}">Leaderboards</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'prison_break_app:terms' %}">TOS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'prison_break_app:privacy' %}">Privacy policy</a>
+              </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
                 {% if user.userprofile.picture %}
