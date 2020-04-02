@@ -322,9 +322,11 @@ class InputHandler {
 									case 2:
 										player.characterCode = 2;
 										player.maxSpeedy = 3;
+										player.maxSpeedx = 3;
 										playerSelected = true;
 										break;
 									case 3:
+										player.characterCode = 3;
 										playerSelected = true;
 										break;
 								}
