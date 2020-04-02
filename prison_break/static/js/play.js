@@ -1889,10 +1889,10 @@ function gameLoop(timestamp){
 	player.draw(ctx);
 
 	if(rankedGameFinished){
-		if (timestamp - timeOfGameStart > 80000){
+		if (timestamp - (timeOfGameStart + inputTime) > 80000){
 			gameScore = 500000 - 80000;
 		}else{
-			let time = Math.floor(timestamp - timeOfGameStart)+totaltime;
+			let time = Math.floor(timestamp - (timeOfGameStart + inputTime));
 			gameScore = 500000 - time;
 		}
 		if (trophy1found==1){
@@ -2129,9 +2129,10 @@ function finishedLoop(timestamp){
 	ctx.font = "21px Arial";
 	ctx.textAlign = 'center';
 	ctx.fillStyle = "#000";
-	ctx.fillText("Congradulations!", GAME_WIDTH/2, GAME_HEIGHT/2 - 10);
+	ctx.fillText("Congratulations!", GAME_WIDTH/2, GAME_HEIGHT/2 - 10);
 	ctx.font = "12px Arial";
 	ctx.fillText("Score: " + gameScore, GAME_WIDTH/2, GAME_HEIGHT/2 + 10);
+	ctx.fillText("Please wait a moment...", GAME_WIDTH/2, GAME_HEIGHT/2 + 30);
 
 
 	player.update(deltaTime);
@@ -2156,6 +2157,8 @@ function finishedLoop(timestamp){
 			modeSelected = false;
 			//
 			playerSelected=false;
+			player.maxSpeedx = 5;
+			player.maxSpeedy = 5;
 			//
 			player.characterCode = 0;
 			rankedGameFinished = false;
