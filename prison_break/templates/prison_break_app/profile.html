@@ -1,13 +1,15 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
-
+{% block head_block %}
+<link rel="stylesheet"  href="{% static "css/profile.css" %}" type="text/css"></link>
+{% endblock %}
 {% block title_block %}
 {{ user }}
 
 {% endblock %}
 
 {% block body_block %}
-<link rel="stylesheet"  href="{% static "css/profile.css" %}" type="text/css"></link>
+
 <div class="container">
 <div id="profile">
 <table>

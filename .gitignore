@@ -32,3 +32,4 @@ prison_break/prison_break_app/migrations/0002_auto_20200401_1345.py
 prison_break/prison_break_app/migrations/0003_auto_20200401_1542.py
 prison_break/prison_break_app/migrations/0002_auto_20200402_1809.py
 prison_break/prison_break_app/migrations/0003_auto_20200402_1811.py
+prison_break/prison_break_app/migrations/0004_userprofile_hascharacter.py

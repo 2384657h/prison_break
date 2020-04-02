@@ -4,6 +4,12 @@
 {% providers_media_js %}
 {% block head_block %}
 <link rel="stylesheet"  href="{% static "css/signup.css" %}" type="text/css"></link>
+<style>
+  .card-signin .card-img-left {
+  background: scroll center url('{% static "images/prison.jpg" %}');
+  background-size: cover;
+  }
+</style>
 {% endblock %}
 
 {% block title_block %}
@@ -15,7 +21,6 @@ Sign up
 
 <script>
   window.onload = function() {
- // add your code change here
     $("#inputUsername").change(function(data){
       var username = $(this).val();
       
@@ -54,7 +59,7 @@ Sign up
       <div class="col-lg-10 col-xl-9 mx-auto">
         <div class="card card-signin flex-row my-5">
           <div class="card-img-left d-none d-md-flex">
-             <!-- Background image for card set in CSS! -->
+             <!-- Background image for card set at the top of the page -->
           </div>
           <div class="card-body">
             <h5 class="card-title text-center">Register</h5>

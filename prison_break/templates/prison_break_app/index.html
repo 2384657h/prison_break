@@ -1,14 +1,18 @@
 {% extends 'prison_break_app/base.html' %}
 {% load static %}
+{% block head_block %}
+<link rel="stylesheet"  href="{% static "css/indexcss.css" %}" type="text/css"></link>
+{% endblock %}
 {% block title_block %}
 Home
 {% endblock %}
 
 {% block body_block %}
-<link rel="stylesheet"  href="{% static "css/indexcss.css" %}" type="text/css"></link>
+
 <h1 class="h1home">Welcome to Prison Break</h1>
-<p class="text-center" id="intro">Prison break is an adventure game where the player must escape the prison as a certain chosen character. 
-    Click the play button below to start a game.
+<p class="text-center" id="intro">Prison break is an adventure game where the player must escape the prison as a certain chosen character. The game is a javascript game, that can be played on a desktop/laptop environment.
+    The controls are the arrow keys to move around the screen and space bar is used to interact and pick up items. 
+    Click the play button below to start a game. (You must be logged in to play)
 </p>
 <div id="thed">
 <a href="{% url 'prison_break_app:play' %}" role="button" class="btn btn-success btn-large">Play game</a>

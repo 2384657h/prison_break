@@ -20,8 +20,7 @@
 
 .card-signin .card-img-left {
   width: 45%;
-  /* Link to your background image using in the property below! */
-  background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
+  
   background-size: cover;
 }
 
@@ -117,15 +116,15 @@
 }
 
 
-/* The alert message box */
+/* Creates a red box to display if invalid login details are entered*/
 .alert {
   padding: 10px;
-  background-color: #f44336; /* Red */
+  background-color: #f44336;
   color: white;
   margin-bottom: 15px;
 }
 
-/* The close button */
+/* Styles button for closing the incorrect details window */
 .closebtn {
   margin-left: 15px;
   color: white;
@@ -137,7 +136,7 @@
   transition: 0.3s;
 }
 
-/* When moving the mouse over the close button */
+/* When moving the mouse over the close button it makes it black */
 .closebtn:hover {
   color: black;
 }
