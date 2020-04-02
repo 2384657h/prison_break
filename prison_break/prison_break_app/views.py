@@ -15,6 +15,7 @@ from django.http import JsonResponse
 
 
 # Create your views here.
+#all the simple viewes are here, just return a render of a page
 def index(request):
     return render(request, 'prison_break_app/index.html')
 
@@ -141,12 +142,15 @@ def end_game(request):
     return HttpResponse(message + " with score: " + str(this_user.userprofile.prevscore))
 
 
+#view for registering user in database
 def register(request, backend='django.contrib.auth.backends.ModelBackend'):
     registered = False
-
+    #make suree its a post request, otherwise send back an error
     if request.method == "POST":
+        #create new user object with username and password and email from post data
         user = User.objects.create_user(username=request.POST.get('Username'), password =request.POST.get('Password'), email=request.POST.get('Email'))
         user.save()
+        #create a profile and attach it to the user
         profile = UserProfile()
         profile.user = user
         #set to currently new game
@@ -154,12 +158,14 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
         profile.score = 0
         profile.newGame = 1
         
+        #assign the profile picture if supplied
         if 'profilepic' in request.FILES:
             profile.picture = request.FILES['profilepic']
 
         profile.save()
 
         registered = True
+        #log the user in
         auth_login(request,user, backend='django.contrib.auth.backends.ModelBackend')
     else:
         print("Error not a post request")
@@ -168,45 +174,59 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
 
     return render(request, 'prison_break_app/index.html' )
 
-
+#change the photo for a profile
 def updatePhoto(request):
+    #find the object holding the user profile to be changed
     userProfile = UserProfile.objects.get(user = request.user.id)
+    #set the new photo
     userProfile.picture = request.FILES['profilepic']
     userProfile.save()
     return render(request, 'prison_break_app/profile.html')
 
+#change the username of the current account
 @csrf_exempt
 def updateUsername(request):
+    #get the user object to change the name of 
     user = request.user
+    #remove leaderboard objects for old username, they will be automatically reecreated with new name
     if Leaderboard.objects.filter(userp=user).exists():
         leaderboardob = Leaderboard.objects.get(userp=user).delete()
+    #change the username
     user.username=request.POST.get('username')
     user.save()
     return render(request, 'prison_break_app/profile.html')
 
+#change email associated with current user
 def updateEmail(request):
+    #get user from request data, change email and save
     user = request.user
     user.email=request.POST.get('email')
     user.save()
     return render(request, 'prison_break_app/profile.html')
         
 
-
+#view for signing in a user
 def signin(request):
+    #make sure post method so data is supplied
     if request.method == "POST":
+        #get the data from the post method
         username = request.POST.get('Username')
         password = request.POST.get('Password')
+        #check if data is correct
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
+                #data is correct and user is not disabled so login and redirect
                 auth_login(request, user)
                 return redirect(reverse('prison_break_app:index'))
             else:
+                #user account is disabled so redirect to login with error message
                 contextdict={}
                 contextdict['Invalid'] = "Youre account has been disabled, Contact an administrator"
                 return render(request, 'prison_break_app/login.html', contextdict)
             
         else:
+            #data supplied is incorrect so redirect to login page wwith error message
             contextdict={}
             contextdict['Invalid'] = "Incorrect username or password given"
             return render(request, 'prison_break_app/login.html', contextdict)
