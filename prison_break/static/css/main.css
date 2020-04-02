@@ -13,6 +13,18 @@ body
 
     
 }
+
+#cookieheader,h2{
+    text-align: center;
+}
+#cookieheader,h2,h3{
+    color: #ff1f1f;
+    font-weight: bolder;
+
+}
+p, li{
+    color: white;
+}
 #content{
     text-align:left;
     backdrop-filter: blur(6px);

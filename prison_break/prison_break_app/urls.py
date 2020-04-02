@@ -20,5 +20,8 @@ urlpatterns = [
     path('updateUsername', views.updateUsername, name='updateUsername'),
     path('updateEmail', views.updateEmail, name='updateEmail'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
-    path('ajax/validate_username/', views.validate_username, name='validate_username')
+    path('ajax/validate_username/', views.validate_username, name='validate_username'),
+    path('delete/', views.deleteacc, name='delete'),
+    path('terms/', views.terms, name='terms'),
+    path('privacy/', views.privacypol, name='privacy'),
 ]

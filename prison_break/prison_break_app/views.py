@@ -21,6 +21,12 @@ def index(request):
 def about(request):
     return render(request, 'prison_break_app/about.html')
 
+def terms(request):
+    return render(request, 'prison_break_app/tos.html')
+
+def privacypol(request):
+    return render(request, 'prison_break_app/privacypol.html')
+
 @login_required
 def profile(request):
     return render(request, 'prison_break_app/profile.html')
@@ -107,7 +113,7 @@ def register(request, backend='django.contrib.auth.backends.ModelBackend'):
 
 
 
-    return render(request, 'prison_break_app/Signup.html' )
+    return render(request, 'prison_break_app/index.html' )
 
 
 def updatePhoto(request):
@@ -143,14 +149,17 @@ def signin(request):
                 auth_login(request, user)
                 return redirect(reverse('prison_break_app:index'))
             else:
-                return HttpResponse("Youre account has been disabled")
+                contextdict={}
+                contextdict['Invalid'] = "Youre account has been disabled, Contact an administrator"
+                return render(request, 'prison_break_app/login.html', contextdict)
             
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            contextdict={}
+            contextdict['Invalid'] = "Incorrect username or password given"
+            return render(request, 'prison_break_app/login.html', contextdict)
 
     else:
-        return render(request, 'prison_break_app/login.html')
+        return render(request, 'prison_break_app/index.html')
 
 @login_required
 def userlogout(request):
@@ -202,6 +211,17 @@ def validate_username(request):
     username = request.GET.get('username', None)
     data = {'is_taken': User.objects.filter(username=username).exists()}
     return JsonResponse(data)
+
+def deleteacc(request): 
+    try:
+        u = User.objects.get(username = request.user.username)
+        logout(request)
+        u.delete()
+        return render(request, 'prison_break_app/index.html')
+
+    except User.DoesNotExist:  
+        return render(request, 'prison_break_app/index.html')
+
 
 
 

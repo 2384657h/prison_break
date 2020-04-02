@@ -30,7 +30,9 @@ Leaderboard
             <td>{{ score.name }}</td>
             <td>{{ score.lscore }}</td>
             {% if score.userp.userprofile.picture %}
-            <td><img src="{{ score.userp.userprofile.picture.url }}" width="50" height="50"></td>
+            <td><img src="{{ score.userp.userprofile.picture.url }}" width="60" height="60"></td>
+            {% else %}
+            <td>No picture set</td>
             {% endif %}
         </tr> 
             {% endfor %}
