@@ -20,6 +20,8 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('prisonbreak/', include('prison_break_app.urls')),
@@ -27,3 +29,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('accounts/profile/', views.profile, name='social'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = views.handler404
