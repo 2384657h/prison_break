@@ -1169,7 +1169,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			url: urlC,
-			data: {'counter':totaltime, 'posX':player.position.x, 'posY':player.position.y,'current_room':currentRoom,'wardenKey':wardenKeyFound,'escapeKey':escapeKeyFound, 'storageKey':storageRoomKeyFound, 'spokeT':spokenToTony, 'spokeJ':spokenToJim, 'trophy1':trophy1found, 'trophy2':trophy2found, 'trophy3':trophy3found, 'distracted':distracted},
+			data: {'counter':totaltime, 'posX':player.position.x, 'posY':player.position.y,'current_room':currentRoom,'wardenKey':wardenKeyFound,'escapeKey':escapeKeyFound, 'storageKey':storageRoomKeyFound, 'spokeT':spokenToTony, 'spokeJ':spokenToJim, 'trophy1':trophy1found, 'trophy2':trophy2found, 'trophy3':trophy3found, 'distracted':distracted, 'character_code':player.characterCode},
 			type: 'POST'
 		}).done(function(response){
 			console.log(response);
@@ -2131,14 +2131,6 @@ function finishedLoop(timestamp){
 	ctx.font = "12px Arial";
 	ctx.fillText("Score: " + gameScore, GAME_WIDTH/2, GAME_HEIGHT/2 + 10);
 
-	//send final game score to server to save
-	$.ajax({
-			url: endgameURL,
-			data: {'finalscore': gameScore},
-			type: 'POST'
-		}).done(function(response){
-			console.log(response);
-		});
 
 	player.update(deltaTime);
 	player.draw(ctx);
@@ -2149,6 +2141,15 @@ function finishedLoop(timestamp){
 		if (timestamp < timeOfGameEnd + 10000){
 			requestAnimationFrame(finishedLoop);
 		}else{
+			//send final game data to server
+			$.ajax({
+					url: endgameURL,
+					data: {'finalscore': gameScore},
+					type: 'POST'
+				}).done(function(response){
+					console.log(response);
+			});
+
 			mode = null;
 			modeSelected = false;
 			//

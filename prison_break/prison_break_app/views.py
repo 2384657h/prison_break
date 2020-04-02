@@ -62,6 +62,7 @@ def update_counter(request):
             this_user.character.gametime = this_user.character.gametime + int(float(time_count))
             this_user.character.posx = coordX
             this_user.character.posy = coordY
+            this_user.character.char_ID = request.POST['character_code']
             this_user.character.current_room = request.POST['current_room']
             this_user.character.trophy1 = request.POST['trophy1']
             this_user.character.trophy2 = request.POST['trophy2']
@@ -84,12 +85,19 @@ def update_counter(request):
 def character_select(request):
     if request.method == 'POST':
         character_code = request.POST['character']
-        #make new character for current user
-        #fill with data
-        character = Character()
+        #check if user has character already
         current_user = request.user
-        character.user = current_user
-        character.char_ID = character_code
+        if current_user.userprofile.hasCharacter ==0:
+            #if they dont then create new character
+            character = Character()
+            character.user = current_user
+            character.char_ID = character_code
+            current_user.userprofile.hasCharacter=1
+        else:
+            current_user.character.char_ID=character_code
+        
+        
+        
         #set newgame two zero, i.e. NOT a new game
         current_user.userprofile.newGame = 0
         current_user.save()

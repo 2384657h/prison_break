@@ -10,6 +10,7 @@ class UserProfile(models.Model):
 	#check if newGame
 	#=1 if new game
 	#=0 if NOT new game
+	hasCharacter = models.IntegerField(default =0)
 	newGame = models.IntegerField(default=1)
 
 
