@@ -140,7 +140,7 @@ class Person {
 
 	performMovement(){
 
-		if(distracted){
+		if(distracted==1){
 			this.maxSpeedx = 5;
 			this.maxSpeedy = 5;
 		}else{
@@ -376,7 +376,7 @@ class InputHandler {
 										stopAllMovement = true;
 										break;
 									case 10:
-										if (storageRoomKeyFound){
+										if (storageRoomKeyFound==1){
 											currentRoom = "Storage Room";
 											player.move_player(GAME_WIDTH/2 - player.width/2, player.height/2 + 10);
 											timeOfRoomChange = lastTime;
@@ -388,7 +388,7 @@ class InputHandler {
 										}
 										break;
 									case 11:
-										storageRoomKeyFound = true;
+										storageRoomKeyFound = 1;
 										break;
 
 									//exit hallway to courtyard
@@ -398,7 +398,7 @@ class InputHandler {
 										timeOfRoomChange = lastTime;
 										break;
 									case 13:
-										if (distracted){
+										if (distracted==1){
 											currentRoom = "Exit Hallway";
 											player.move_player(GAME_WIDTH/2 - player.width/2,player.height + 5);
 											timeOfRoomChange = lastTime;
@@ -425,7 +425,7 @@ class InputHandler {
 
 									//storage to cafeteria
 									case 16:
-										if (storageRoomKeyFound){
+										if (storageRoomKeyFound==1){
 											currentRoom = "Cafeteria";
 											player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height/2 - 30);
 											timeOfRoomChange = lastTime;
@@ -433,10 +433,10 @@ class InputHandler {
 										break;
 									//get escape key in stroage room
 									case 17:
-										escapeKeyFound = true;
+										escapeKeyFound = 1;
 										break;
 									case 18:
-										if(wardenKeyFound){
+										if(wardenKeyFound==1){
 											currentRoom = "Warden's Office";
 											player.move_player(player.width/2 + 25, GAME_HEIGHT/2 - player.height/2);
 											timeOfRoomChange = lastTime;
@@ -453,7 +453,7 @@ class InputHandler {
 										timeOfRoomChange = lastTime;
 										break;
 									case 20:
-										if (escapeKeyFound){
+										if (escapeKeyFound==1){
 											rankedGameFinished = true;
 										}else{
 											timeOfTextStart = lastTime;
@@ -508,7 +508,7 @@ class InputHandler {
 										characterSpeaking = 0;
 										stopAllMovement = true;
 										speakingReason = "key";
-										wardenKeyFound = true;
+										wardenKeyFound = 1;
 										break;
 									case 29:
 										if (player.characterCode == 2){
@@ -516,7 +516,7 @@ class InputHandler {
 											characterSpeaking = 0;
 											stopAllMovement = true;
 											speakingReason = "key";
-											escapeKeyFound = true;
+											escapeKeyFound = 1;
 										}else{
 											timeOfTextStart = lastTime;
 											characterSpeaking = 0;
@@ -548,21 +548,21 @@ class InputHandler {
 										randomTextInt = getRandomInt(3);
 										break;
 									case 34:
-										trophy1found = true;
+										trophy1found = 1;
 										timeOfTextStart = lastTime;
 										characterSpeaking = 0;
 										stopAllMovement = true;
 										speakingReason = "value";
 										break;
 									case 35:
-										trophy2found = true;
+										trophy2found = 1;
 										timeOfTextStart = lastTime;
 										characterSpeaking = 0;
 										stopAllMovement = true;
 										speakingReason = "value";
 										break;
 									case 36:
-										trophy3found = true;
+										trophy3found = 1;
 										timeOfTextStart = lastTime;
 										characterSpeaking = 0;
 										stopAllMovement = true;
@@ -660,6 +660,9 @@ let niceGuard = ["Hello.","How are you doing today?","Someone giving you trouble
 
 var randomTextInt;
 
+var totaltime = 0;
+
+var currentTimestamp = 0;
 
 
 //refers to the character that is player is on
@@ -751,17 +754,21 @@ var arrow_width = 32;
 var rankedGameFinished = false;
 var gameScore;
 
+let isNewGame = document.getElementById("newgamecheck").value;
+
 //thing that will need to be saved
-var spokenToJim = false;
-var spokenToTony = false;
-var storageRoomKeyFound = false;
-var escapeKeyFound = false;
-var distracted = false;
-var wardenKeyFound = false;
-var trophy1found = false;
-var trophy2found = false;
-var trophy3found = false;
-var currentRoom;
+var spokenToJim = 0;
+var spokenToTony = 0;
+var storageRoomKeyFound = 0;
+var escapeKeyFound = 0;
+var distracted = 0;
+var wardenKeyFound = 0;
+var trophy1found = 0;
+var trophy2found = 0;
+var trophy3found = 0;
+var currentRoom = "";
+
+
 var playerSelected = false;
 var currentRunningTime;
 var modeSelected = false;
@@ -888,7 +895,6 @@ let found_k3 = false;
 
 var buffer = 82;
 
-let isNewGame = document.getElementById("newgamecheck").value;
 let charcodeInput = document.getElementById("charCode").value;
 
 function modeSelectionLoop(timestamp){
@@ -959,7 +965,7 @@ function modeSelectionLoop(timestamp){
 			player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height - GAME_HEIGHT/6);
 
 			//if newGame, go into character selection
-			if (isNewGame==1){
+			if (parseInt(isNewGame)==1){
 				characterSelectionLoop();
 			}
 			else{
@@ -971,12 +977,29 @@ function modeSelectionLoop(timestamp){
 					player.maxSpeedx = 3;
 					player.maxSpeedy = 3;
 				}
-				currentRoom = possible_start_rooms[getRandomInt(3)];
-				player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
+
+				spokenToJim = parseInt(document.getElementById("spokeJ").value);
+				spokenToTony = parseInt(document.getElementById("spokeT").value);
+				storageRoomKeyFound = parseInt(document.getElementById("storeroomKey").value);
+				escapeKeyFound = parseInt(document.getElementById("escapeKey").value);
+				distracted = parseInt(document.getElementById("distracted").value);
+				wardenKeyFound = parseInt(document.getElementById("wardenKey").value);
+				trophy1found = parseInt(document.getElementById("trophy1").value);
+				trophy2found = parseInt(document.getElementById("trophy2").value);
+				trophy3found = parseInt(document.getElementById("trophy3").value);
+
+
+				player.position.x = parseInt(document.getElementById("posX").value);
+				player.position.y = parseInt(document.getElementById("posY").value);
+
+				//player.move_player(parseInt(document.getElementById("posX").value),parseInt(document.getElementById("posY").value))
+
+				currentRoom  = document.getElementById("currentRoom").value;
+
+				//player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
 				playerSelected = true;
 				timeOfRoomChange = timestamp;
 				timeOfGameStart = timestamp;
-				player.characterCode = 1;
 				gameLoop();
 			}
 			
@@ -1103,7 +1126,7 @@ function characterSelectionLoop(timestamp){
 		//character selected, send data to server
 		$.ajax({
 			url: urlSelect,
-			data: {'character': player.characterCode, 'posX' : player.position.x, 'posY': player.position.y},
+			data: {'character': player.characterCode},
 			type: 'POST'
 		}).done(function(response){
 			console.log(response);
@@ -1112,6 +1135,7 @@ function characterSelectionLoop(timestamp){
 		player.move_player(GAME_HEIGHT/2 - player.height/2, GAME_WIDTH/2 - player.width/2);
 		timeOfRoomChange = timestamp;
 		timeOfGameStart = timestamp;
+		currentRoom = possible_start_rooms[getRandomInt(3)];
 		gameLoop();
 	}
 }
@@ -1120,19 +1144,39 @@ function characterSelectionLoop(timestamp){
 //as ajax post request wasnt finding url from inside js file
 let urlC = document.getElementById("counterURL").value;
 
+let inputTime = document.getElementById("inputTime").value;
+
+//var spokenToJim = 0;
+//var spokenToTony = 0;
+//var storageRoomKeyFound = 0;
+//var escapeKeyFound = 0;
+//var distracted = 0;
+//var wardenKeyFound = 0;
+//var trophy1found = 0;
+//var trophy2found = 0;
+//var trophy3found = 0;
+//var currentRoom;
+
+//, 'current_room':currentRoom, 'wardenKey':wardenKeyFound,
+//			'escapeKey':escapeKeyFound, 'storageKey':storageRoomKeyFound, 'spokeT':spokenToTony, 'spokeJ':spokenToJim, 'distracted':distracted,
+//			'trophy1':trophy1, 'trophy2':trophy2, 'trophy3':trophy3
+
 $(document).ready(function(){
 	$('#save_btn').click(function(){
-		if (!player.key1Found){
-			//alert("saved!");
-			//counter++;
-			$.ajax({
-				url: urlC,
-				data: {'counter': 1, 'posX' : player.position.x, 'posY': player.position.y},
-				type: 'POST'
-			}).done(function(response){
-				console.log(response);
-			});
-		}
+		//send data every time button is clicked
+
+		totaltime = (inputTime) + (currentTimestamp-timeOfGameStart);
+
+		$.ajax({
+			url: urlC,
+			data: {'counter':totaltime, 'posX':player.position.x, 'posY':player.position.y,'current_room':currentRoom,'wardenKey':wardenKeyFound,'escapeKey':escapeKeyFound, 'storageKey':storageRoomKeyFound, 'spokeT':spokenToTony, 'spokeJ':spokenToJim, 'trophy1':trophy1found, 'trophy2':trophy2found, 'trophy3':trophy3found, 'distracted':distracted},
+			type: 'POST'
+		}).done(function(response){
+			console.log(response);
+		});
+
+		timeOfGameStart = currentTimestamp;
+		
 	})
 })
 
@@ -1140,7 +1184,8 @@ $(document).ready(function(){
 function gameLoop(timestamp){
 
 	let deltaTime = timestamp-lastTime;
-	lastTime = timestamp
+	lastTime = timestamp;
+	currentTimestamp=timestamp;
 	
 
 	ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
@@ -1212,7 +1257,7 @@ function gameLoop(timestamp){
 	}
 
 	//sometime open
-	if (storageRoomKeyFound){
+	if (storageRoomKeyFound==1){
 		ctx.fillStyle = "#0000ff"; 
 	}else{
 		ctx.fillStyle = "#ff0000";
@@ -1224,7 +1269,7 @@ function gameLoop(timestamp){
 	}
 	
 	//open with distaction
-	if (distracted){
+	if (distracted==1){
 		ctx.fillStyle = "#0000ff"; 
 	}else{
 		ctx.fillStyle = "#ff0000";
@@ -1236,7 +1281,7 @@ function gameLoop(timestamp){
 	}
 
 	//open with distaction
-	if (wardenKeyFound){
+	if (wardenKeyFound==1){
 		ctx.fillStyle = "#0000ff"; 
 	}else{
 		ctx.fillStyle = "#ff0000";
@@ -1247,7 +1292,7 @@ function gameLoop(timestamp){
 		ctx.fillRect(0, GAME_HEIGHT/2 - door_width/2, door_height, door_width);
 	}
 
-	if (escapeKeyFound){
+	if (escapeKeyFound==1){
 		ctx.fillStyle = "#0000ff"; 
 	}else{
 		ctx.fillStyle = "#ff0000";
@@ -1257,7 +1302,7 @@ function gameLoop(timestamp){
 	}
 
 	if (currentRoom == "Courtyard"){
-		if (!distracted){
+		if (distracted==0){
 			guardwanderer1.performMovement();
 			guardwanderer1.update(deltaTime);
 			guardwanderer1.draw(ctx);
@@ -1292,7 +1337,7 @@ function gameLoop(timestamp){
 			ctx.font = "12px Arial";
 			ctx.textAlign = 'center';
 			ctx.fillStyle = "#000";
-			if (!distracted){
+			if (distracted==0){
 				ctx.fillText("Hey, I'll make a distraction if", prisonerwanderer7.position.x + 5, prisonerwanderer7.position.y + prisonerwanderer7.height + 20);
 				ctx.fillText("you talk to Tony in the Day Room.", prisonerwanderer7.position.x + 5, prisonerwanderer7.position.y + prisonerwanderer7.height + 30);
 			}else{
@@ -1300,11 +1345,11 @@ function gameLoop(timestamp){
 			}
 		}else if(characterSpeaking == 9){
 			stopAllMovement = false;
-			spokenToJim = true;
+			spokenToJim = 1;
 		}
 
 		//interact with guard
-		if(!distracted){
+		if(distracted==0){
 			if(canPlayerInteract(guardwanderer1.position.x -5, guardwanderer1.position.y - 5, guardwanderer1.height + 10, guardwanderer1.width + 10)){
 				ranked_hovered_over_object = 21;
 			}
@@ -1403,13 +1448,13 @@ function gameLoop(timestamp){
 		ctx.fillStyle = "#c0c0c0";
 		ctx.fillRect(0, GAME_HEIGHT/3 -5, GAME_WIDTH, 5);
 
-		if (!distracted){
+		if (distracted==0){
 			guardwanderer2.performMovement();
 			guardwanderer2.update(deltaTime);
 			guardwanderer2.draw(ctx);
 		}
 
-		if (!distracted){
+		if (distracted==0){
 			if(canPlayerInteract(guardwanderer2.position.x -5, guardwanderer2.position.y - 5, guardwanderer2.height + 10, guardwanderer2.width + 10)){
 				ranked_hovered_over_object = 24;
 			}
@@ -1423,7 +1468,7 @@ function gameLoop(timestamp){
 				ctx.fillText(genericGuard[randomTextInt], guardwanderer2.position.x + 5, guardwanderer2.position.y + guardwanderer2.height + 20);
 			}else{
 				ctx.fillText("Hey man, I got you that thing you wanted.", guardwanderer2.position.x + 5, guardwanderer2.position.y + guardwanderer2.height + 20);
-				escapeKeyFound = true;
+				escapeKeyFound = 1;
 			}
 		}else if(characterSpeaking == 24){
 			stopAllMovement = false;
@@ -1453,7 +1498,7 @@ function gameLoop(timestamp){
 
 	}else if (currentRoom == "Day Room"){
 
-		if(distracted){
+		if(distracted==1){
 			guardwanderer4.performMovement();
 			guardwanderer4.update(deltaTime);
 			guardwanderer4.draw(ctx);
@@ -1487,7 +1532,7 @@ function gameLoop(timestamp){
 		prisonerwanderer4.update(deltaTime);
 		prisonerwanderer4.draw(ctx);
 
-		if(!trophy2found){
+		if(trophy2found==0){
 			ctx.drawImage(trophyImg, trophy2Data.x, trophy2Data.y, trophy2Data.width, trophy2Data.height);
 		}
 
@@ -1556,7 +1601,7 @@ function gameLoop(timestamp){
 				characterSpeaking = 0;
 				speakingReason = "stole";
 				stopAllMovement = true;
-				escapeKeyFound = true;
+				escapeKeyFound = 1;
 			}else{
 				timeOfTextStart = lastTime;
 				characterSpeaking = 0;
@@ -1569,9 +1614,9 @@ function gameLoop(timestamp){
 			ctx.font = "15px Arial";
 			ctx.textAlign = 'center';
 			ctx.fillStyle = "#000";
-			if (!spokenToJim){
+			if (spokenToJim==0){
 				ctx.fillText("...", prisonerwanderer4.position.x + prisonerwanderer4.width/2, prisonerwanderer4.position.y + prisonerwanderer4.height + 20);
-			} else if (distracted && spokenToJim){
+			} else if (distracted==1 && spokenToJim==1){
 				ctx.font = "12px Arial";
 				ctx.fillText("Let's tear this place apart, man!", prisonerwanderer4.position.x, prisonerwanderer4.position.y + prisonerwanderer4.height + 20);
 			}else{
@@ -1581,7 +1626,7 @@ function gameLoop(timestamp){
 			}
 		}else if(characterSpeaking == 15){
 			stopAllMovement = false;
-			spokenToTony = true;
+			spokenToTony = 1;
 		}
 
 		//door to courtyard
@@ -1607,7 +1652,7 @@ function gameLoop(timestamp){
 		ctx.drawImage(toiletImg, 4 * (GAME_WIDTH/6) - 35,GAME_HEIGHT - 90, 35,40);
 
 		//draw key
-		if(!storageRoomKeyFound){
+		if(storageRoomKeyFound==0){
 			ctx.drawImage(keyImg, storageKeyData.x, storageKeyData.y, storageKeyData.width, storageKeyData.height);
 		}
 
@@ -1631,7 +1676,7 @@ function gameLoop(timestamp){
 		}
 	}else if (currentRoom == "Cafeteria"){
 
-		if (!distracted){
+		if (distracted==0){
 			guardwanderer5.performMovement();
 			guardwanderer5.update(deltaTime);
 			guardwanderer5.draw(ctx);
@@ -1725,7 +1770,7 @@ function gameLoop(timestamp){
 			ctx.font = "15px Arial";
 			ctx.textAlign = 'center';
 			ctx.fillStyle = "#000";
-			if (!spokenToTony){
+			if (spokenToTony==0){
 				ctx.fillText("...", prisonerwanderer3.position.x + prisonerwanderer3.width/2, prisonerwanderer3.position.y + prisonerwanderer3.height + 20);
 			}else{
 				ctx.font = "12px Arial";
@@ -1733,8 +1778,8 @@ function gameLoop(timestamp){
 			}
 		}else if(characterSpeaking == 14){
 			stopAllMovement = false;
-			if (spokenToTony){
-				distracted = true;
+			if (spokenToTony==1){
+				distracted = 1;
 			}
 		}
 
@@ -1744,12 +1789,12 @@ function gameLoop(timestamp){
 
 	}else if(currentRoom == "Storage Room"){
 
-		if(!trophy1found){
+		if(trophy1found==0){
 			ctx.drawImage(trophyImg, trophy1Data.x, trophy1Data.y, trophy1Data.width, trophy1Data.height);
 		}
 		
 		//draw key
-		if(!escapeKeyFound){
+		if(escapeKeyFound==0){
 			ctx.drawImage(keyImg, escape1KeyData.x, escape1KeyData.y, escape1KeyData.width, escape1KeyData.height);
 		}
 
@@ -1827,8 +1872,8 @@ function gameLoop(timestamp){
 			ctx.fillText("z z z", guardwanderer8.position.x + guardwanderer8.width/2, guardwanderer8.position.y + guardwanderer8.height + 20);
 		}else if(characterSpeaking == 27){
 			stopAllMovement = false;
-			if (spokenToTony){
-				distracted = true;
+			if (spokenToTony==1){
+				distracted = 1;
 			}
 		}
 
@@ -1845,16 +1890,16 @@ function gameLoop(timestamp){
 		if (timestamp - timeOfGameStart > 80000){
 			gameScore = 500000 - 80000;
 		}else{
-			let time = Math.floor(timestamp - timeOfGameStart);
+			let time = Math.floor(timestamp - timeOfGameStart)+totaltime;
 			gameScore = 500000 - time;
 		}
-		if (trophy1found){
+		if (trophy1found==1){
 			gameScore = gameScore + 20000;
 		}
-		if (trophy2found){
+		if (trophy2found==1){
 			gameScore = gameScore + 20000;
 		}
-		if (trophy3found){
+		if (trophy3found==1){
 			gameScore = gameScore + 100000;
 		}
 		timeOfGameEnd = timestamp;
@@ -2071,6 +2116,8 @@ function demoLoop(timestamp){
 	}
 }
 
+let endgameURL = document.getElementById("endgameURL").value;
+
 function finishedLoop(timestamp){
 	let deltaTime =  timestamp - lastTime;
 	lastTime = timestamp;
@@ -2084,6 +2131,15 @@ function finishedLoop(timestamp){
 	ctx.font = "12px Arial";
 	ctx.fillText("Score: " + gameScore, GAME_WIDTH/2, GAME_HEIGHT/2 + 10);
 
+	//send final game score to server to save
+	$.ajax({
+			url: endgameURL,
+			data: {'finalscore': gameScore},
+			type: 'POST'
+		}).done(function(response){
+			console.log(response);
+		});
+
 	player.update(deltaTime);
 	player.draw(ctx);
 
@@ -2095,17 +2151,20 @@ function finishedLoop(timestamp){
 		}else{
 			mode = null;
 			modeSelected = false;
+			//
+			playerSelected=false;
+			//
 			player.characterCode = 0;
 			rankedGameFinished = false;
-			spokenToJim = false;
-			spokenToTony = false;
-			storageRoomKeyFound = false;
-			escapeKeyFound = false;
-			distracted = false;
-			wardenKeyFound = false;
-			trophy1found = false;
-			trophy2found = false;
-			trophy3found = false;
+			spokenToJim = 0;
+			spokenToTony = 0;
+			storageRoomKeyFound = 0;
+			escapeKeyFound = 0;
+			distracted = 0;
+			wardenKeyFound = 0;
+			trophy1found = 0;
+			trophy2found = 0;
+			trophy3found = 0;
 			modeSelectionLoop();
 		}
 	}

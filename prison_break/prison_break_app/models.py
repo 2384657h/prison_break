@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	score = models.IntegerField(default=0)
+	prevscore = models.IntegerField(default=0)
 	picture = models.ImageField(upload_to='profile_image', blank=True)
 
 	#check if newGame
@@ -22,12 +23,19 @@ class Character(models.Model):
 	posx = models.IntegerField(default =0)
 	posy = models.IntegerField(default =0)
 
-	#in case we use these fields
-	#for more complex game
-	########
-	#current_room = models.CharField(max_length=30,unique=False)
-	#item_1 = models.CharField(max_length=128)
-	#item_2 = models.CharField(max_length=128)
+	#record time user has played game on this character
+	gametime = models.IntegerField(default=0)
+
+	current_room = models.CharField(max_length=30,unique=False)
+	spokeJ = models.IntegerField(default =0)
+	spokeT = models.IntegerField(default =0)
+	storeroomKey = models.IntegerField(default =0)
+	wardenKey = models.IntegerField(default =0)
+	escapeKey = models.IntegerField(default =0)
+	trophy1 = models.IntegerField(default =0)
+	trophy2 = models.IntegerField(default =0)
+	trophy3 = models.IntegerField(default =0)
+	distracted = models.IntegerField(default =0)
 
 class Leaderboard(models.Model):
 	userp = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
