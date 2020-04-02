@@ -15,7 +15,7 @@ def create_user():
     profile = UserProfile()
     profile.user = user
     profile.newGame = 1
-    profile.score = 27
+    profile.prevscore = 27
     profile.save()
 
 
@@ -86,12 +86,18 @@ class test_login(TestCase):
     def setUp(self):
         create_user()
 
-
     def test_login_works(self):
 
         print("testing login")
         login(self)
         self.assertTrue(login) 
+    
+    def delete_user(self):
+        print("testing deleting user")
+        user = create_user()
+        post_data = {'user':user}
+        self.client.post(reverse('prison_break_app:delete'))
+        self.assertFalse(self.client.login(username=test_username, password=test_password))
 
 class test_template_used(TestCase):
     """
@@ -195,6 +201,7 @@ class test_models(TestCase):
 
     def test_leaderboard(self):
         #generate leaderboard object by visiting leaderboard page
+        login(self)
         response = self.client.get('/prisonbreak/leaderboard/')
         leaderboard = Leaderboard.objects.get(name=test_username)
         self.assertEqual(leaderboard.lscore, 27)
@@ -210,3 +217,4 @@ class test_registration(TestCase):
 
         self.assertTrue(self.client.login(username='test_username', password='testingpassword'))
 
+    
