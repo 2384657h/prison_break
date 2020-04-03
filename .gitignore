@@ -3,6 +3,7 @@ __pycache__
 db.sqlite3
 prison_break/media
 .DS_Store
+prison_break/prison_break_app/migrations
 
 
 
