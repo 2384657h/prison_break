@@ -5,6 +5,7 @@
 {% block head_block %}
         
 <style>
+  /* Small amount of inline css to style 404 error message */
   .header {
     padding: 60px;
     text-align: center;
@@ -19,9 +20,10 @@ Page not found
 {% endblock %}
 
 {% block body_block %}
+ <!-- Creats a 404 error message -->
 <div class="header">
     <h1>Uh Oh...</h1>
-    <p>This page doesnt exist.</p>
+    <p>This page doesnt exist. (404 Error)</p>
 </div>
 
 {% endblock %}
