@@ -3,11 +3,13 @@
 {% load socialaccount %}
 {% providers_media_js %}
 {% block head_block %}
+ <!-- Imports the signin/login css -->
 <link rel="stylesheet"  href="{% static "css/signup.css" %}" type="text/css"></link>
 <style>
   .card-signin .card-img-left {
   background: scroll center url('{% static "images/prison.jpg" %}');
   background-size: cover;
+  /* Some inline css to import a static image as the side card for the signup form */
   }
 </style>
 {% endblock %}
@@ -17,7 +19,7 @@ Login
 
 {% block body_block %}
 
-
+  <!-- Creates the login form in the card style -->
   <div class="container">
     <div class="row">
       <div class="col-lg-10 col-xl-9 mx-auto">
@@ -28,11 +30,13 @@ Login
           <div class="card-body">
             <h5 class="card-title text-center">Login</h5>
             {% if Invalid  %}
+             <!-- Creates and error box if the user enters incorrect login details -->
               <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 Incorrect username or password
               </div>
             {% endif %}
+             <!-- Creates fields for the username and password -->
             <form class="form-signin" method="POST" action="{% url 'prison_break_app:signin' %}">
                 {% csrf_token %}
               <div class="form-label-group">
@@ -49,7 +53,7 @@ Login
               
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
-              
+               <!-- Creates the login and login with google buttons -->
               <hr class="my-4">
               <a href="{% provider_login_url "google" %}" class="btn btn-primary">Login with Google</a>
             </form>

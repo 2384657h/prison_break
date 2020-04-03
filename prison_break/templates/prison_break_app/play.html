@@ -1,6 +1,7 @@
 {% extends 'prison_break_app/base.html'%}
 {% load static %}
 {% block head_block %}
+<!-- Imports play button css -->
 <link rel="stylesheet"  href="{% static "css/play.css" %}" type="text/css"></link>
 {% endblock %}
 {% block title_block %}
@@ -9,7 +10,8 @@ Game Screen
 
 {% block body_block %}
 
-	<div id="save"><button type="button" class = "btn btn-success btn-large" id="save_btn">Save Game?</button></div>	
+	<div id="save"><button type="button" class = "btn btn-success btn-large" id="save_btn">Save Game?</button></div>
+	<!-- Creates button to save the game and canvas for game screen -->	
     <canvas id="gameScreen" width="600" height="600"></canvas>
 	<input value="{% url 'prison_break_app:update_counter' %}" hidden ="hidden" id="counterURL" />
 	<input value="{% url 'prison_break_app:character_select' %}" hidden ="hidden" id="charSelectURL" />
@@ -29,6 +31,7 @@ Game Screen
 	<input value="{{ user.character.storeroomKey }}" hidden ="hidden" id="storeroomKey" />
 	<input value="{{ user.character.distracted }}" hidden ="hidden" id="distracted" />
 	<input value="{{ user.character.current_room }}" hidden ="hidden" id="currentRoom" />
+	<!-- Loads game script -->
     <script src="{% static "js/play.js" %}"></script>
 {% endblock %}
 

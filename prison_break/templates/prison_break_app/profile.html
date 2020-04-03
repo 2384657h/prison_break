@@ -169,7 +169,7 @@
   window.onload = loadjs()
   function loadjs(){
 
- // add your code change here
+ // Creats a script to check the new entered username against all other usernames to make sure its not already used
     $("#inputUsername").change(function(){
       var username = $(this).val();
       console.log(username);
@@ -183,6 +183,7 @@
         },
         dataType: 'json',
         success: function (data) {
+          // sets input box validity if the usernames already been used
           if (data.is_taken) {
             $('#inputUsername')[0].setCustomValidity('Username already taken');
 
@@ -202,6 +203,7 @@
 
 }
   if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
+    // Loads the script when the back button is used
         loadjs()
   }
 
