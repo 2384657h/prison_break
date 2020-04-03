@@ -27,7 +27,7 @@ def terms(request):
 
 def privacypol(request):
     return render(request, 'prison_break_app/privacypol.html')
-
+ #Checks the user is logged in to view these pages
 @login_required
 def profile(request):
     return render(request, 'prison_break_app/profile.html')
@@ -234,15 +234,19 @@ def signin(request):
     else:
         return render(request, 'prison_break_app/index.html')
 
+#View to log the user out of their current logged in account
 @login_required
 def userlogout(request):
     logout(request)
     return redirect(reverse('prison_break_app:index'))
 
+#Creates the view to process the leaderboard
 def leaderboard(request):
     score_list = {}
     users = User.objects.all()
-    
+
+    #Loops through all users and gets their user profiles, checks their current score is not 0 (ie not played) and adds them to a 
+    #hashmap/dictionary
 
     for theuser in users:
         name = theuser.username
@@ -255,7 +259,8 @@ def leaderboard(request):
 
     
 
-    
+    #Goes through every userprofile in the hashmap and creates a leaderboard object for them. If the user is on the leaderboard it updates
+    #the existing leaderboard entry otherwise it saves the new leaderboard profile
     
     for key, value in score_list.items():
         leaderboard = Leaderboard()
@@ -271,20 +276,22 @@ def leaderboard(request):
 
 
 
-    
+    #Orders the top 10 leaderboard scores in descending order (ie higher score is better)
     leaderboards = Leaderboard.objects.all().order_by('-lscore')[:10]
     context_dict = {}
 
     context_dict['Leaderboard'] = leaderboards
     
-    
+    #Returns the queryset of leaderboards objects back to the page in a context_dict
     return render(request, 'prison_break_app/leaderboard.html', context=context_dict)
 
+#Helper function to check if a username is in the database to stop duplicate key errors
 def validate_username(request):
     username = request.GET.get('username', None)
     data = {'is_taken': User.objects.filter(username=username).exists()}
     return JsonResponse(data)
 
+#View to delete a user account and will return the logged out deleted user to the homepage
 def deleteacc(request): 
     try:
         u = User.objects.get(username = request.user.username)
@@ -295,6 +302,7 @@ def deleteacc(request):
     except User.DoesNotExist:  
         return render(request, 'prison_break_app/index.html')
 
+#Creates a custom view when not in development to handle 404 page not found errors
 def handler404(request, exception):
     return render(request, 'prison_break_app/404.html', status=404)
 
