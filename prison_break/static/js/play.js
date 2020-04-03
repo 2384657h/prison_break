@@ -756,7 +756,7 @@ var arrow_width = 32;
 var rankedGameFinished = false;
 var gameScore;
 
-let isNewGame = document.getElementById("newgamecheck").value;
+//let isNewGame = document.getElementById("newgamecheck").value;
 
 //thing that will need to be saved
 var spokenToJim = 0;
@@ -965,6 +965,8 @@ function modeSelectionLoop(timestamp){
 		}
 		if (mode == "Ranked"){
 			player.move_player(GAME_WIDTH/2 - player.width/2, GAME_HEIGHT - player.height - GAME_HEIGHT/6);
+
+			let isNewGame = document.getElementById("newgamecheck").value;
 
 			//if newGame, go into character selection
 			if (parseInt(isNewGame)==1){
@@ -2172,7 +2174,7 @@ function finishedLoop(timestamp){
 			trophy1found = 0;
 			trophy2found = 0;
 			trophy3found = 0;
-			isNewGame = 1;
+			//isNewGame = 1;
 			modeSelectionLoop();
 		}
 	}
