@@ -3,11 +3,13 @@
 {% load socialaccount %}
 {% providers_media_js %}
 {% block head_block %}
+<!-- Impors the main stylesheet for the page -->
 <link rel="stylesheet"  href="{% static "css/signup.css" %}" type="text/css"></link>
 <style>
   .card-signin .card-img-left {
   background: scroll center url('{% static "images/prison.jpg" %}');
   background-size: cover;
+  /* Inline css to load static image like in login page */
   }
 </style>
 {% endblock %}
@@ -20,6 +22,7 @@ Sign up
 {% block body_block %}
 
 <script>
+  /* inline javascript to check username is unique using Ajax querys, had issues when trying to do external scripts */
   window.onload = function() {
     $("#inputUsername").change(function(data){
       var username = $(this).val();
@@ -33,6 +36,7 @@ Sign up
         },
         dataType: 'json',
         success: function (data) {
+          /* Checks if the usernames been used and sets the input box validity based on this */
           $('#inputUsername')[0].setCustomValidity('');
           if (data.is_taken) {
             $('#inputUsername')[0].setCustomValidity('Username already taken');
@@ -63,6 +67,7 @@ Sign up
           </div>
           <div class="card-body">
             <h5 class="card-title text-center">Register</h5>
+            <!-- Creates the form and labels for each field -->
             <form class="form-signin" method="POST" enctype="multipart/form-data" action="{% url 'prison_break_app:register' %}">
                 {% csrf_token %}
               <div class="form-label-group">
@@ -87,6 +92,7 @@ Sign up
                 <input type="password" id="inputConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Password" required>
                 <label for="inputConfirmPassword">Confirm password</label>
               </div>
+              <!-- Javascript for validating the password -->
               <script src="{% static "js/passwordvalidator.js" %}"></script>
               <div class="form-label-group">
                 <input type="file" id=fileUpload name="profilepic" class="form-control" placeholder="Profile Picture" accept="image/*">
@@ -100,6 +106,7 @@ Sign up
               
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" id="thesubmit" type="submit">Register</button>
+              <!-- Creates register and login with google buttons -->
               <hr class="my-4">
               <a href="{% provider_login_url "google" %}" class="btn btn-primary">Login with Google</a>
             </form>
