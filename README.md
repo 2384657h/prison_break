@@ -37,6 +37,7 @@ python manage.py runserver
 ```
 
 **Optional (Enabling google login)**
+
 1.) Create a database superuser using
 ```
 python manage.py createsuperuser
