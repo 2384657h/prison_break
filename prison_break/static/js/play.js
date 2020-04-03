@@ -2153,6 +2153,7 @@ function finishedLoop(timestamp){
 					console.log(response);
 			});
 
+			//reset all character data
 			mode = null;
 			modeSelected = false;
 			//
@@ -2171,6 +2172,7 @@ function finishedLoop(timestamp){
 			trophy1found = 0;
 			trophy2found = 0;
 			trophy3found = 0;
+			isNewGame = 1;
 			modeSelectionLoop();
 		}
 	}

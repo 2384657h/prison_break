@@ -55,7 +55,7 @@ def update_counter(request):
 
         #increment user score
         this_user.save()
-        message = 'update successful'
+        message = 'save successful'
 
         if this_user.userprofile.newGame == 0:
             #save character data
@@ -76,7 +76,7 @@ def update_counter(request):
             this_user.character.distracted = request.POST['distracted']
             this_user.character.save()
 
-            message = message + " " + this_user.character.current_room + str(this_user.character.wardenKey) + str(this_user.character.distracted) + str(this_user.userprofile.newGame)
+            message = message + " " + this_user.character.current_room 
         
 
     return HttpResponse(message)
