@@ -42,13 +42,21 @@ python manage.py runserver
 python manage.py createsuperuser
 ```
 2.) Login to the admin page by navigating to 127.0.0.1:8000/admin and login
+
 3.) Click on sites, There should be one by deafult called example.com and if not just add one.
+
 4.) Change the domain name to 127.0.0.1:8000 and set the display name to whatever you like and save
+
 5.) Go back to the admin home page
+
 6.) At the bottom click on social applications and the click on add social application in the top right
+
 7.) Set the provider to be google. Then name it anything (I reccomend google api)
+
 8.) Then input the client id and secret key (For our tutor these are located in the project summary sheet on moodle)
+
 9.) Click on the site we added earlier and move it across into the "Chosen sites" box.
+
 10.) Save and return home.
 
 Google login should now be working properly.
