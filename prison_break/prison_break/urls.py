@@ -13,14 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin #Test 2
-from django.urls import path #Test
+from django.contrib import admin 
+from django.urls import path 
 from prison_break_app import views
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+#Creates the main urls for admin, general url and social account urls. Also allows media to be shown to the user.
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('accounts/profile/', views.profile, name='social'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+#Redirects 404 errors to the custom view when not in development
 handler404 = views.handler404

@@ -147,8 +147,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-
+#States all the things reuired when a user uses google login
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = False
 LOGIN_ERROR_URL = "/"
+#Redirects to the home page if the login fails
